@@ -1,4 +1,4 @@
-import 'package:autotureid/domain/entities/product.dart';
+import 'package:autotureid/app/domain/entities/product.dart';
 
 class Cart {
   final String id;
