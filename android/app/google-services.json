@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "811491048876",
+    "project_id": "autoture-v1",
+    "storage_bucket": "autoture-v1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:811491048876:android:aaae26a250bf41ead88e09",
+        "android_client_info": {
+          "package_name": "com.example.autotureid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "811491048876-qtfoj553n0q3ushsarpl2t3a0rnvc972.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDR63EYHIC5Wd4mARUQQF3kHX5t4E6icWY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "811491048876-qtfoj553n0q3ushsarpl2t3a0rnvc972.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>811491048876-e6ljgeigp627v6452ae9bmmg0a0avkuh.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.811491048876-e6ljgeigp627v6452ae9bmmg0a0avkuh</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDCfRe_LkwcSi6V6OsJ1KfIMEL3J58mPl4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>811491048876</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.autotureid</string>
+	<key>PROJECT_ID</key>
+	<string>autoture-v1</string>
+	<key>STORAGE_BUCKET</key>
+	<string>autoture-v1.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:811491048876:ios:b2340dfe850d8228d88e09</string>
+</dict>
+</plist>
