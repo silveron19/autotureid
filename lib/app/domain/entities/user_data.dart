@@ -2,8 +2,8 @@ class UserData {
   final String id;
   final String username;
   final String email;
-  final String phoneNumber;
-  final String profilePicture;
+  final String? phoneNumber;
+  final String? profilePicture;
 
   UserData({
     required this.id,
