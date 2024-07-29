@@ -1,10 +1,15 @@
 import 'package:autotureid/app/data/datasources/abstracts/auth/auth_local_data_source.dart';
 import 'package:autotureid/app/data/datasources/abstracts/auth/auth_remote_data_source.dart';
+import 'package:autotureid/app/data/datasources/abstracts/product/product_remote_data_source.dart';
 import 'package:autotureid/app/data/datasources/firebase/auth_remote_data_source_firebase.dart';
+import 'package:autotureid/app/data/datasources/firebase/product_remote_data_source_firebase.dart';
 import 'package:autotureid/app/data/datasources/impl/auth_local_data_source_firebase.dart';
 import 'package:autotureid/app/data/repositories/auth_repository_impl.dart';
+import 'package:autotureid/app/data/repositories/product_repository_impl.dart';
 import 'package:autotureid/app/domain/repositories/auth_repository.dart';
+import 'package:autotureid/app/domain/repositories/product_repository.dart';
 import 'package:autotureid/app/presentation/provider/auth_notifier.dart';
+import 'package:autotureid/app/presentation/provider/product_notifier.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -22,6 +27,11 @@ Future<void> init() async {
       localDataSource: sl(),
     ),
   );
+  sl.registerLazySingleton<ProductRepository>(
+    () => ProductRepositoryImpl(
+      remoteDataSource: sl(),
+    ),
+  );
 
   // Data sources
   sl.registerLazySingleton<AuthRemoteDataSource>(
@@ -36,11 +46,22 @@ Future<void> init() async {
       storage: sl(),
     ),
   );
+  sl.registerLazySingleton<ProductRemoteDataSource>(
+    () => ProductRemoteDataSourceFirebase(
+      auth: sl(),
+      firestore: sl(),
+    ),
+  );
 
   // Provider
   sl.registerFactory(
     () => AuthNotifier(
       authRepository: sl(),
+    ),
+  );
+  sl.registerFactory(
+    () => ProductNotifier(
+      productRepository: sl(),
     ),
   );
 

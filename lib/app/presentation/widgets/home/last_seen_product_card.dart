@@ -33,7 +33,7 @@ class LastSeenProductCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Image.asset(
+          Image.network(
             product.picture,
             width: 85,
             height: 100,

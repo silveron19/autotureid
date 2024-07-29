@@ -154,5 +154,4 @@ class AuthRepositoryImpl implements AuthRepository {
       );
     }
   }
-
 }

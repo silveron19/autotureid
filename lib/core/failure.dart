@@ -16,3 +16,9 @@ class ConnectionFailure extends Failure {
 class BadRequestFailure extends Failure {
   BadRequestFailure({required super.message});
 }
+
+class ServerFailure extends Failure {
+  ServerFailure({
+    super.message = 'Terjadi kesalahan server',
+  });
+}

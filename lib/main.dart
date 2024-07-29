@@ -1,4 +1,5 @@
 import 'package:autotureid/app/presentation/provider/auth_notifier.dart';
+import 'package:autotureid/app/presentation/provider/product_notifier.dart';
 import 'package:autotureid/core/constants.dart';
 import 'package:autotureid/core/router.dart';
 import 'package:autotureid/core/theme.dart';
@@ -27,6 +28,7 @@ class App extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => di.sl<AuthNotifier>()),
+        ChangeNotifierProvider(create: (_) => di.sl<ProductNotifier>()),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
