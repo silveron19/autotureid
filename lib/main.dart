@@ -29,6 +29,7 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => di.sl<AuthNotifier>()),
       ],
       child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
         title: kAppName,
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,

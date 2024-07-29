@@ -96,7 +96,7 @@ class ScaffoldWithNavBar extends StatelessWidget {
                         width: 24,
                       ),
                     ),
-                    label: 'Langganan',
+                    label: 'Profil',
                   ),
                 ],
                 currentIndex: navigationShell.currentIndex,

@@ -1,5 +1,6 @@
 import 'package:autotureid/app/domain/entities/subscription.dart';
-import 'package:autotureid/app/presentation/pages/home_page.dart';
+import 'package:autotureid/app/presentation/pages/home/home_page.dart';
+import 'package:autotureid/app/presentation/pages/home/product_detail_page.dart';
 import 'package:autotureid/app/presentation/pages/register/login_screen.dart';
 import 'package:autotureid/app/presentation/pages/register/signup_screen.dart';
 import 'package:autotureid/app/presentation/pages/scaffold_with_navbar.dart';
@@ -33,7 +34,7 @@ final router = GoRouter(
         // main page will have navbar
         if (state.fullPath == '/home' ||
             state.fullPath == '/arture' ||
-            state.fullPath == '/subscription') {
+            state.fullPath == '/profile') {
           return ScaffoldWithNavBar(navigationShell: navigationShell);
         }
         // other page will not have navbar
@@ -57,8 +58,20 @@ final router = GoRouter(
               builder: (context, state) => const HomePage(),
               routes: [
                 GoRoute(
-                  path: 'detail',
-                  builder: (context, state) => const HomePage(),
+                  path: 'subscription',
+                  builder: (context, state) => const SubscriptionPage(),
+                  routes: [
+                    GoRoute(
+                      path: 'detail',
+                      builder: (context, state) => SubscriptionDetailPage(
+                        subscription: state.extra as Subscription,
+                      ),
+                    ),
+                  ],
+                ),
+                GoRoute(
+                  path: 'detail/:id',
+                  builder: (context, state) => ProductDetailPage(id: state.pathParameters['id']!,),
                 ),
               ],
             ),
@@ -75,16 +88,9 @@ final router = GoRouter(
         StatefulShellBranch(
           routes: [
             GoRoute(
-                path: '/subscription',
-                builder: (context, state) => const SubscriptionPage(),
-                routes: [
-                  GoRoute(
-                    path: 'detail',
-                    builder: (context, state) => SubscriptionDetailPage(
-                      subscription: state.extra as Subscription,
-                    ),
-                  ),
-                ]),
+              path: '/profile',
+              builder: (context, state) => const SubscriptionPage(),
+            ),
           ],
         ),
       ],

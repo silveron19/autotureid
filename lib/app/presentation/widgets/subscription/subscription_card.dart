@@ -120,7 +120,7 @@ class SubscriptionCard extends StatelessWidget {
                         borderRadius: 100,
                         onPressed: () {
                           if (subscription.expiredAt == null) {
-                            context.push('/subscription/detail', extra: subscription);
+                            context.push('/home/subscription/detail', extra: subscription);
                           }
                         },
                       ),

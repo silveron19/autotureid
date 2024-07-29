@@ -16,7 +16,7 @@ class NewProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
     return GestureDetector(
-      onTap: () => context.go('/home/detail', extra: product),
+      onTap: () => context.push('/home/detail/${product.id}'),
       child: Container(
         margin: const EdgeInsets.only(right: kDefaultPadding),
         // padding: const EdgeInsets.all(16),

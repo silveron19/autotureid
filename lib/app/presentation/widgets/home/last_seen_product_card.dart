@@ -1,4 +1,5 @@
 import 'package:autotureid/app/domain/entities/product.dart';
+import 'package:autotureid/app/presentation/widgets/global/primary_elevated_button.dart';
 import 'package:autotureid/core/constants.dart';
 import 'package:autotureid/core/utils/parse_price.dart';
 import 'package:flutter/material.dart';
@@ -63,21 +64,11 @@ class LastSeenProductCard extends StatelessWidget {
               ],
             ),
           ),
-          GestureDetector(
-            onTap: () => context.go('/home/detail', extra: product),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              decoration: BoxDecoration(
-                color: color.onSurface,
-                borderRadius: BorderRadius.circular(100),
-              ),
-              child: Center(
-                child: Text(
-                  'Lihat Detail',
-                  style: TextStyle(color: color.surface),
-                ),
-              ),
-            ),
+          PrimaryElevatedButton(
+            text: 'Lihat Detail',
+            dense: true,
+            borderRadius: 100,
+            onPressed: () => context.push('/home/detail/${product.id}'),
           ),
         ],
       ),

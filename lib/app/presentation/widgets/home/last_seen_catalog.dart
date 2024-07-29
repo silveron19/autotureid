@@ -57,14 +57,6 @@ class LastSeenCatalog extends StatelessWidget {
                     ),
                   ),
                 ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.arrow_forward_rounded,
-                  ),
-                  iconSize: 32,
-                  color: color.onSurface,
-                ),
               ],
             ),
           ),
