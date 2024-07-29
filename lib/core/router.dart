@@ -1,6 +1,7 @@
 import 'package:autotureid/app/domain/entities/subscription.dart';
 import 'package:autotureid/app/presentation/pages/home/home_page.dart';
 import 'package:autotureid/app/presentation/pages/home/product_detail_page.dart';
+import 'package:autotureid/app/presentation/pages/profile/profile_page.dart';
 import 'package:autotureid/app/presentation/pages/register/login_screen.dart';
 import 'package:autotureid/app/presentation/pages/register/signup_screen.dart';
 import 'package:autotureid/app/presentation/pages/scaffold_with_navbar.dart';
@@ -71,7 +72,9 @@ final router = GoRouter(
                 ),
                 GoRoute(
                   path: 'detail/:id',
-                  builder: (context, state) => ProductDetailPage(id: state.pathParameters['id']!,),
+                  builder: (context, state) => ProductDetailPage(
+                    id: state.pathParameters['id']!,
+                  ),
                 ),
               ],
             ),
@@ -89,7 +92,7 @@ final router = GoRouter(
           routes: [
             GoRoute(
               path: '/profile',
-              builder: (context, state) => const SubscriptionPage(),
+              builder: (context, state) => const ProfilePage(),
             ),
           ],
         ),
