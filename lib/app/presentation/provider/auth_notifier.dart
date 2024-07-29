@@ -59,13 +59,13 @@ class AuthNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateProfile({
-    String? username,
-    String? email,
-    String? password,
-    String? phoneNumber,
+  Future<void> updateProfile(
+    String username,
+    String email,
+    String password,
+    String phoneNumber,
     File? profilePicture,
-  }) async {
+  ) async {
     updateProfileState.setLoading();
     notifyListeners();
     final result = await authRepository.updateProfile(

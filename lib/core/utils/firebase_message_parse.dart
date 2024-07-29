@@ -51,4 +51,19 @@ class FirebaseMessageParse {
         return 'Tidak dapat terhubung ke server';
     }
   }
+
+  static String parseUpdateEmailError(String error) {
+    switch (error) {
+      case 'email-already-in-use':
+        return 'Email telah digunakan';
+      case 'invalid-email':
+        return 'Email tidak valid';
+      case 'operation-not-allowed':
+        return 'Tidak bisa mengubah email';
+      case 'requires-recent-login':
+        return 'Silahkan login kembali';
+      default:
+        return 'Tidak dapat terhubung ke server';
+    }
+  }
 }

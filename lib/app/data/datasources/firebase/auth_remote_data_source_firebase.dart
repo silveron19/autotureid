@@ -32,7 +32,7 @@ class AuthRemoteDataSourceFirebase implements AuthRemoteDataSource {
     }
 
     // get user data from firestore
-    final userDoc = await firestore.collection('user').doc(userCredential.user!.uid).get();
+    final userDoc = await firestore.collection('users').doc(userCredential.user!.uid).get();
 
     return UserDataModel.fromJson(userDoc.data()!);
   }
@@ -56,7 +56,7 @@ class AuthRemoteDataSourceFirebase implements AuthRemoteDataSource {
     }
 
     // create user data in firestore
-    final userDoc = firestore.collection('user').doc(userCredential.user!.uid);
+    final userDoc = firestore.collection('users').doc(userCredential.user!.uid);
 
     final userData = UserDataModel(
       id: userCredential.user!.uid,
@@ -71,23 +71,42 @@ class AuthRemoteDataSourceFirebase implements AuthRemoteDataSource {
 
   @override
   Future<UserDataModel> updateProfile(UpdateProfileParameter parameter) async {
+    // check if user update email
+    if (parameter.email.isNotEmpty) {
+      // update email in firebase auth
+      try {
+        await firebaseAuth.currentUser!.reauthenticateWithCredential(
+          EmailAuthProvider.credential(
+            email: firebaseAuth.currentUser!.email!,
+            password: parameter.password,
+          ),
+        );
+        await firebaseAuth.currentUser!.updateEmail(parameter.email);
+        // await firebaseAuth.currentUser!.verifyBeforeUpdateEmail(parameter.email!);
+      } on FirebaseAuthException catch (e) {
+        throw CustomException(FirebaseMessageParse.parseUpdateEmailError(e.code));
+      }
+    }
+
     // update user data in firestore
-    final userDoc = firestore.collection('user').doc(firebaseAuth.currentUser!.uid);
+    final userDoc = firestore.collection('users').doc(firebaseAuth.currentUser!.uid);
 
     // user data model
     final doc = await userDoc.get();
 
     final oldUserData = UserDataModel.fromJson(doc.data()!);
 
+    // update profile picture
     String? newProfilePictureUrl;
     if (parameter.profilePicture != null) {
       if (oldUserData.profilePicture != null) {
         // delete old profile picture
-        final oldProfilePictureRef = firebaseStorage.ref().child('profile_picture/${firebaseAuth.currentUser!.uid}');
+        final oldProfilePictureRef =
+            firebaseStorage.ref().child('profile_pictures/${firebaseAuth.currentUser!.uid}');
         await oldProfilePictureRef.delete();
       }
       // upload profile picture and get download url
-      final ref = firebaseStorage.ref().child('profile_picture/${firebaseAuth.currentUser!.uid}');
+      final ref = firebaseStorage.ref().child('profile_pictures/${firebaseAuth.currentUser!.uid}');
       final uploadTask = ref.putFile(parameter.profilePicture!);
       await uploadTask.whenComplete(() => null);
       newProfilePictureUrl = await ref.getDownloadURL();
@@ -95,9 +114,10 @@ class AuthRemoteDataSourceFirebase implements AuthRemoteDataSource {
 
     final newUserData = UserDataModel(
       id: oldUserData.id,
-      username: parameter.username ?? oldUserData.username,
-      email: parameter.email ?? oldUserData.email,
-      phoneNumber: parameter.phoneNumber ?? oldUserData.phoneNumber,
+      username: parameter.username.isNotEmpty ? parameter.username : oldUserData.username,
+      email: parameter.email.isNotEmpty ? parameter.email : oldUserData.email,
+      phoneNumber:
+          parameter.phoneNumber.isNotEmpty ? parameter.phoneNumber : oldUserData.phoneNumber,
       profilePicture: newProfilePictureUrl ?? oldUserData.profilePicture,
     );
 

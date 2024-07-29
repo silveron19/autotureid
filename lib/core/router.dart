@@ -1,6 +1,7 @@
 import 'package:autotureid/app/domain/entities/subscription.dart';
 import 'package:autotureid/app/presentation/pages/home/home_page.dart';
 import 'package:autotureid/app/presentation/pages/home/product_detail_page.dart';
+import 'package:autotureid/app/presentation/pages/profile/edit_profile_page.dart';
 import 'package:autotureid/app/presentation/pages/profile/profile_page.dart';
 import 'package:autotureid/app/presentation/pages/register/login_screen.dart';
 import 'package:autotureid/app/presentation/pages/register/signup_screen.dart';
@@ -93,6 +94,12 @@ final router = GoRouter(
             GoRoute(
               path: '/profile',
               builder: (context, state) => const ProfilePage(),
+              routes: [
+                GoRoute(
+                  path: 'edit',
+                  builder: (context, state) => const EditProfilePage(),
+                ),
+              ],
             ),
           ],
         ),

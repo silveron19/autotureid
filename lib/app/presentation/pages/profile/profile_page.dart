@@ -5,6 +5,7 @@ import 'package:autotureid/app/presentation/widgets/profile/profile_option_tile.
 import 'package:autotureid/const/resource.dart';
 import 'package:autotureid/core/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -19,47 +20,49 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   void initState() {
-    user = Provider.of<AuthNotifier>(context, listen: false).user;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<AuthNotifier>(context, listen: false).user;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profil'),
       ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(kDefaultPadding),
-          child: Column(
-            children: [
-              ProfileHeaderInformation(user: user),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Akun',
-                    style: kSubtitle5TextStyle,
-                  ),
-                  ProfileOptionTile(
-                    image: R.ASSETS_ICONS_PROFILE_EDIT_PROFILE_PNG,
-                    text: 'Ubah Profil',
-                    onTap: () {},
-                  ),
-                  ProfileOptionTile(
-                    image: R.ASSETS_ICONS_PROFILE_SUBSCRIPTION_PNG,
-                    text: 'Langganan',
-                    onTap: () {},
-                  ),
-                  ProfileOptionTile(
-                    image: R.ASSETS_ICONS_PROFILE_ACCOUNT_SETTING_PNG,
-                    text: 'Atur Akun',
-                    onTap: () {},
-                  ),
-                ],
-              ),
-            ],
+      body: Consumer<AuthNotifier>(
+        builder: (context, value, child) => SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(kDefaultPadding),
+            child: Column(
+              children: [
+                ProfileHeaderInformation(user: user),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Akun',
+                      style: kSubtitle5TextStyle,
+                    ),
+                    ProfileOptionTile(
+                      image: R.ASSETS_ICONS_PROFILE_EDIT_PROFILE_PNG,
+                      text: 'Ubah Profil',
+                      onTap: () => context.push('/profile/edit'),
+                    ),
+                    ProfileOptionTile(
+                      image: R.ASSETS_ICONS_PROFILE_SUBSCRIPTION_PNG,
+                      text: 'Langganan',
+                      onTap: () {},
+                    ),
+                    ProfileOptionTile(
+                      image: R.ASSETS_ICONS_PROFILE_ACCOUNT_SETTING_PNG,
+                      text: 'Atur Akun',
+                      onTap: () {},
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

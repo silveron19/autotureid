@@ -12,6 +12,7 @@ class PrimaryElevatedButton extends StatelessWidget {
     this.style,
     this.borderRadius = 6,
     this.white = false,
+    this.primaryColor = false,
   });
 
   final String text;
@@ -22,12 +23,21 @@ class PrimaryElevatedButton extends StatelessWidget {
   final ButtonStyle? style;
   final double borderRadius;
   final bool white;
+  final bool primaryColor;
 
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
-    final backgroundColor = white ? Colors.white : color.onSurface;
-    final textColor = white ? Colors.black : color.surface;
+    final backgroundColor = primaryColor
+        ? color.primary
+        : white
+            ? Colors.white
+            : color.onSurface;
+    final textColor = primaryColor
+        ? Colors.black
+        : white
+            ? Colors.black
+            : color.surface;
 
     return ElevatedButton(
       onPressed: onPressed,

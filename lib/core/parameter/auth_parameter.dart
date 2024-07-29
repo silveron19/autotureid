@@ -20,10 +20,10 @@ class SignupParameter {
 }
 
 class UpdateProfileParameter {
-  final String? username;
-  final String? email;
-  final String? password;
-  final String? phoneNumber;
+  final String username;
+  final String email;
+  final String password;
+  final String phoneNumber;
   final File? profilePicture;
 
   UpdateProfileParameter({

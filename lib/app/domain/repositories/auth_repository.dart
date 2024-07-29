@@ -17,10 +17,10 @@ abstract class AuthRepository {
   );
 
   Future<Either<Failure, UserData>> updateProfile(
-    String? username,
-    String? email,
-    String? password,
-    String? phoneNumber,
+    String username,
+    String email,
+    String password,
+    String phoneNumber,
     File? profilePicture,
   );
 

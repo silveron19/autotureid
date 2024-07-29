@@ -16,6 +16,9 @@ class TextInputColumn extends StatelessWidget {
     this.onComplete,
     this.validator,
     this.validatorText = 'Form harus diisi',
+    this.arterisk = false,
+    this.prefixWidget,
+    this.onChanged,
   });
 
   final String text;
@@ -29,6 +32,9 @@ class TextInputColumn extends StatelessWidget {
   final void Function()? onComplete;
   final bool Function(String value)? validator;
   final String validatorText;
+  final bool arterisk;
+  final Widget? prefixWidget;
+  final void Function(String value)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -38,13 +44,27 @@ class TextInputColumn extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            text,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: kFontweightBold,
-              color: color.onBackground,
-            ),
+          Row(
+            children: [
+              Text(
+                text,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: kFontweightBold,
+                  color: color.onBackground,
+                ),
+              ),
+              arterisk
+                  ? const Text(
+                      ' *',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: kFontweightBold,
+                        color: Colors.red,
+                      ),
+                    )
+                  : const SizedBox(),
+            ],
           ),
           const SizedBox(height: 12),
           PrimaryTextField(
@@ -58,6 +78,8 @@ class TextInputColumn extends StatelessWidget {
             onComplete: onComplete,
             validator: validator,
             validatorText: validatorText,
+            prefixWidget: prefixWidget,
+            onChanged: onChanged,
           ),
         ],
       ),

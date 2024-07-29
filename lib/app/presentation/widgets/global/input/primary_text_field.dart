@@ -15,6 +15,8 @@ class PrimaryTextField extends StatefulWidget {
   final bool Function(String value)? validator;
   final String validatorText;
   final double borderRadius;
+  final Widget? prefixWidget;
+  final void Function(String value)? onChanged;
 
   const PrimaryTextField({
     super.key,
@@ -30,6 +32,8 @@ class PrimaryTextField extends StatefulWidget {
     this.validator,
     this.validatorText = 'Field must be filled',
     this.borderRadius = 10,
+    this.prefixWidget,
+    this.onChanged,
   });
 
   @override
@@ -59,7 +63,8 @@ class _PrimaryTextFieldState extends State<PrimaryTextField> {
     final color = Theme.of(context).colorScheme;
     _suffixIcon = _getSuffix();
     return TextFormField(
-      cursorColor: color.secondary,
+      onChanged: widget.onChanged,
+      cursorColor: color.primary,
       focusNode: _focusNode,
       validator: widget.validator != null
           ? (value) {
@@ -98,8 +103,8 @@ class _PrimaryTextFieldState extends State<PrimaryTextField> {
       textInputAction: widget.isLastInput ? TextInputAction.done : TextInputAction.next,
       style: const TextStyle(
         fontSize: 16,
-        fontWeight: FontWeight.w400,
-        color: kDarkGrey,
+        fontWeight: kFontweightBold,
+        color: Colors.black,
       ),
       decoration: InputDecoration(
         hintText: widget.hintText,
@@ -141,6 +146,7 @@ class _PrimaryTextFieldState extends State<PrimaryTextField> {
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide.none,
         ),
+        prefixIcon: widget.prefixWidget,
         suffix: _suffixIcon,
         suffixIcon: widget.suffixIcon,
       ),
