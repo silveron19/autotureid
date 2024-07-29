@@ -43,39 +43,41 @@ class _UpdateUserProfileCircleState extends State<UpdateUserProfileCircle> {
 
   Future showOptions(BuildContext context) async {
     bool showDeleteOption = widget.imageNotifier.value != null || widget.imageUrl != null;
+    List<Widget> getActions(context) {
+      List<Widget> actions = [
+        CupertinoActionSheetAction(
+          child: const Text('Galeri Foto'),
+          onPressed: () async {
+            Navigator.of(context).pop();
+            getImageFromGallery();
+          },
+        ),
+        CupertinoActionSheetAction(
+          child: const Text('Kamera'),
+          onPressed: () async {
+            Navigator.of(context).pop();
+            getImageFromCamera();
+          },
+        ),
+      ];
 
-    List<Widget> actions = [
-      CupertinoActionSheetAction(
-        child: const Text('Galeri Foto'),
-        onPressed: () async {
-          Navigator.of(context).pop();
-          getImageFromGallery();
-        },
-      ),
-      CupertinoActionSheetAction(
-        child: const Text('Kamera'),
-        onPressed: () async {
-          Navigator.of(context).pop();
-          getImageFromCamera();
-        },
-      ),
-    ];
-
-    if (showDeleteOption) {
-      actions.add(CupertinoActionSheetAction(
-        child: const Text('Hapus'),
-        onPressed: () async {
-          Navigator.of(context).pop();
-          widget.deleteProfileNotifier.value = true;
-          widget.imageNotifier.value = null;
-        },
-      ));
+      if (showDeleteOption) {
+        actions.add(CupertinoActionSheetAction(
+          child: const Text('Hapus'),
+          onPressed: () async {
+            Navigator.of(context).pop();
+            widget.deleteProfileNotifier.value = true;
+            widget.imageNotifier.value = null;
+          },
+        ));
+      }
+      return actions;
     }
 
     showCupertinoModalPopup(
       context: context,
       builder: (context) => CupertinoActionSheet(
-        actions: actions,
+        actions: getActions(context),
       ),
     );
   }
@@ -84,8 +86,10 @@ class _UpdateUserProfileCircleState extends State<UpdateUserProfileCircle> {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
-      widget.imageNotifier.value = File(pickedFile.path);
-      widget.deleteProfileNotifier.value = false;
+      setState(() {
+        widget.imageNotifier.value = File(pickedFile.path);
+        widget.deleteProfileNotifier.value = false;
+      });
     }
   }
 
@@ -93,8 +97,10 @@ class _UpdateUserProfileCircleState extends State<UpdateUserProfileCircle> {
     final pickedFile = await picker.pickImage(source: ImageSource.camera);
 
     if (pickedFile != null) {
-      widget.imageNotifier.value = File(pickedFile.path);
-      widget.deleteProfileNotifier.value = false;
+      setState(() {
+        widget.imageNotifier.value = File(pickedFile.path);
+        widget.deleteProfileNotifier.value = false;
+      });
     }
   }
 

@@ -38,12 +38,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
     phoneController = TextEditingController(text: user.phoneNumber);
     emailController = TextEditingController(text: user.email);
     passwordController = TextEditingController();
+    deleteProfileNotifier = ValueNotifier<bool>(false);
     formKey = GlobalKey<FormState>();
-    if (user.profilePicture == null) {
-      deleteProfileNotifier = ValueNotifier<bool>(true);
-    } else {
-      deleteProfileNotifier = ValueNotifier<bool>(false);
-    }
     super.initState();
   }
 
