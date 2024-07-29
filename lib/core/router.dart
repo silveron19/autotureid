@@ -1,8 +1,11 @@
+import 'package:autotureid/app/domain/entities/subscription.dart';
 import 'package:autotureid/app/presentation/pages/home_page.dart';
 import 'package:autotureid/app/presentation/pages/register/login_screen.dart';
 import 'package:autotureid/app/presentation/pages/register/signup_screen.dart';
 import 'package:autotureid/app/presentation/pages/scaffold_with_navbar.dart';
 import 'package:autotureid/app/presentation/pages/splash_screen.dart';
+import 'package:autotureid/app/presentation/pages/subscription/subscription_detail_page.dart';
+import 'package:autotureid/app/presentation/pages/subscription/subscription_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -29,8 +32,8 @@ final router = GoRouter(
       builder: (context, state, navigationShell) {
         // main page will have navbar
         if (state.fullPath == '/home' ||
-            state.fullPath == '/news' ||
-            state.fullPath == '/chatbot') {
+            state.fullPath == '/arture' ||
+            state.fullPath == '/subscription') {
           return ScaffoldWithNavBar(navigationShell: navigationShell);
         }
         // other page will not have navbar
@@ -64,7 +67,7 @@ final router = GoRouter(
         StatefulShellBranch(
           routes: [
             GoRoute(
-              path: '/news',
+              path: '/arture',
               builder: (context, state) => const HomePage(),
             ),
           ],
@@ -72,9 +75,16 @@ final router = GoRouter(
         StatefulShellBranch(
           routes: [
             GoRoute(
-              path: '/chatbot',
-              builder: (context, state) => const HomePage(),
-            ),
+                path: '/subscription',
+                builder: (context, state) => const SubscriptionPage(),
+                routes: [
+                  GoRoute(
+                    path: 'detail',
+                    builder: (context, state) => SubscriptionDetailPage(
+                      subscription: state.extra as Subscription,
+                    ),
+                  ),
+                ]),
           ],
         ),
       ],

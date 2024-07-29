@@ -1,3 +1,4 @@
+import 'package:autotureid/core/constants.dart';
 import 'package:flutter/material.dart';
 
 const _white = Color(0xffFFFFFF);
@@ -20,15 +21,21 @@ class AppTheme {
       onSurfaceVariant: _grey,
       shadow: _grey,
     ),
-    appBarTheme: const AppBarTheme(
+    appBarTheme: AppBarTheme(
+      shape: Border(
+        bottom: BorderSide(
+          color: _primary.withOpacity(0.5),
+        ),
+      ),
       scrolledUnderElevation: 0.0,
       surfaceTintColor: _white,
-      elevation: 5,
+      elevation: 0,
       shadowColor: Colors.black,
-      centerTitle: true,
-      titleTextStyle: TextStyle(
+      centerTitle: false,
+      titleTextStyle: const TextStyle(
         fontSize: 22,
         color: _black,
+        fontWeight: kFontweightBold,
       ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
@@ -117,12 +124,13 @@ class AppTheme {
     appBarTheme: const AppBarTheme(
       scrolledUnderElevation: 0.0,
       surfaceTintColor: _black,
-      elevation: 5,
+      elevation: 0,
       shadowColor: Colors.black,
-      centerTitle: true,
+      centerTitle: false,
       titleTextStyle: TextStyle(
         fontSize: 22,
         color: _white,
+        fontWeight: kFontweightBold,
       ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(

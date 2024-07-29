@@ -56,7 +56,7 @@ class LastSeenProductCard extends StatelessWidget {
                   ParsePrice.parsePriceToRupiah(product.price),
                   style: const TextStyle(
                     fontSize: 16,
-                    color: kPriceColor,
+                    color: kGreenColor,
                     fontWeight: kFontweightSemiBold,
                   ),
                 ),
