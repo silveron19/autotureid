@@ -125,6 +125,7 @@ class AuthRepositoryImpl implements AuthRepository {
     String password,
     String phoneNumber,
     File? profilePicture,
+    bool deleteProfilePicture,
   ) async {
     try {
       final user = await remoteDataSource.updateProfile(
@@ -134,6 +135,7 @@ class AuthRepositoryImpl implements AuthRepository {
           username: username,
           phoneNumber: phoneNumber,
           profilePicture: profilePicture,
+          deleteProfilePicture: deleteProfilePicture,
         ),
       );
       await localDataSource.cacheToLocal(user);

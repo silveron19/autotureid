@@ -65,6 +65,7 @@ class AuthNotifier extends ChangeNotifier {
     String password,
     String phoneNumber,
     File? profilePicture,
+    bool deleteProfilePicture,
   ) async {
     updateProfileState.setLoading();
     notifyListeners();
@@ -74,6 +75,7 @@ class AuthNotifier extends ChangeNotifier {
       password,
       phoneNumber,
       profilePicture,
+      deleteProfilePicture,
     );
     result.fold(
       (failure) => updateProfileState.setError(error: failure.message),

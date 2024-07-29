@@ -112,6 +112,17 @@ class AuthRemoteDataSourceFirebase implements AuthRemoteDataSource {
       newProfilePictureUrl = await ref.getDownloadURL();
     }
 
+    // if delete profile picture
+    if (parameter.deleteProfilePicture) {
+      if (oldUserData.profilePicture != null) {
+        // delete old profile picture
+        final oldProfilePictureRef =
+            firebaseStorage.ref().child('profile_pictures/${firebaseAuth.currentUser!.uid}');
+        await oldProfilePictureRef.delete();
+        newProfilePictureUrl = null;
+      }
+    }
+
     final newUserData = UserDataModel(
       id: oldUserData.id,
       username: parameter.username.isNotEmpty ? parameter.username : oldUserData.username,

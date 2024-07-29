@@ -104,6 +104,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         passwordController.text,
                         phoneController.text,
                         imageNotifier.value,
+                        deleteProfileNotifier.value &&
+                            user.profilePicture !=
+                                null, // delete profile picture if user already have profile picture
                       );
                     }
                   },

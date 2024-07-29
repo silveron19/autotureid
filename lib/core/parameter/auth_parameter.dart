@@ -25,6 +25,7 @@ class UpdateProfileParameter {
   final String password;
   final String phoneNumber;
   final File? profilePicture;
+  final bool deleteProfilePicture;
 
   UpdateProfileParameter({
     required this.email,
@@ -32,5 +33,6 @@ class UpdateProfileParameter {
     required this.username,
     required this.phoneNumber,
     required this.profilePicture,
+    required this.deleteProfilePicture,
   });
 }

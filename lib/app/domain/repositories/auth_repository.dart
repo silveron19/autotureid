@@ -22,6 +22,7 @@ abstract class AuthRepository {
     String password,
     String phoneNumber,
     File? profilePicture,
+    bool deleteProfilePicture,
   );
 
   Future<Either<Failure, void>> logout();

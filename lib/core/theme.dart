@@ -1,4 +1,5 @@
 import 'package:autotureid/core/constants.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 const _white = Color(0xffFFFFFF);
@@ -105,6 +106,9 @@ class AppTheme {
       confirmButtonStyle: ButtonStyle(
         foregroundColor: MaterialStateProperty.all<Color>(_primary),
       ),
+    ),
+    cupertinoOverrideTheme: const CupertinoThemeData(
+      primaryColor: _black,
     ),
   );
 
