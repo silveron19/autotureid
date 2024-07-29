@@ -1,9 +1,8 @@
 import 'package:autotureid/core/enums.dart';
-import 'package:autotureid/core/failure.dart';
 
 class NotifierState<T> {
   T? value;
-  Failure? failure;
+  String? failure;
   RequestState state;
 
   NotifierState({
@@ -17,7 +16,7 @@ class NotifierState<T> {
     this.value = value;
   }
 
-  void setError({Failure? error}) {
+  void setError({String? error}) {
     state = RequestState.error;
     failure = error;
   }

@@ -55,7 +55,6 @@ class AuthRepositoryImpl implements AuthRepository {
     } on CustomException catch (e) {
       return Left(
         BadRequestFailure(
-          title: 'Login Gagal',
           message: e.message,
         ),
       );
@@ -82,7 +81,6 @@ class AuthRepositoryImpl implements AuthRepository {
     } on CustomException catch (e) {
       return Left(
         BadRequestFailure(
-          title: 'Sign Out Gagal',
           message: e.message,
         ),
       );
@@ -114,7 +112,6 @@ class AuthRepositoryImpl implements AuthRepository {
     } on CustomException catch (e) {
       return Left(
         BadRequestFailure(
-          title: 'Sign Up Gagal',
           message: e.message,
         ),
       );
@@ -150,7 +147,6 @@ class AuthRepositoryImpl implements AuthRepository {
     } on CustomException catch (e) {
       return Left(
         BadRequestFailure(
-          title: 'Gagal Update Profil',
           message: e.message,
         ),
       );

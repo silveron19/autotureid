@@ -5,7 +5,7 @@ class ProductModel {
   final String mitraId;
   final String title;
   final String desc;
-  final String price;
+  final int price;
   final String picture;
   final String model;
 
@@ -72,7 +72,7 @@ class ProductModel {
     String? mitraId,
     String? title,
     String? desc,
-    String? price,
+    int? price,
     String? picture,
     String? model,
   }) {

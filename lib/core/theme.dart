@@ -60,7 +60,7 @@ class AppTheme {
       style: ButtonStyle(
         side: MaterialStateProperty.all<BorderSide>(
           const BorderSide(
-            color: _white,
+            color: _black,
             width: 2.0,
           ),
         ),
@@ -75,15 +75,10 @@ class AppTheme {
         overlayColor: MaterialStateProperty.resolveWith<Color>(
           (Set<MaterialState> states) {
             if (states.contains(MaterialState.pressed)) {
-              return _white.withOpacity(0.2);
+              return _black.withOpacity(0.2);
             }
-            return _black;
+            return _white;
           },
-        ),
-        shape: MaterialStateProperty.all<OutlinedBorder>(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(4.0),
-          ),
         ),
       ),
     ),
@@ -159,7 +154,7 @@ class AppTheme {
       style: ButtonStyle(
         side: MaterialStateProperty.all<BorderSide>(
           const BorderSide(
-            color: _black,
+            color: _white,
             width: 2.0,
           ),
         ),
@@ -174,15 +169,10 @@ class AppTheme {
         overlayColor: MaterialStateProperty.resolveWith<Color>(
           (Set<MaterialState> states) {
             if (states.contains(MaterialState.pressed)) {
-              return _black.withOpacity(0.2);
+              return _white.withOpacity(0.2);
             }
-            return _white;
+            return _black;
           },
-        ),
-        shape: MaterialStateProperty.all<OutlinedBorder>(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(4.0),
-          ),
         ),
       ),
     ),

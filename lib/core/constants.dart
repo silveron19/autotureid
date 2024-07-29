@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 const kDarkGrey = Color(0xff616161);
+const kDisableColor = Color(0xffBDBDBD);
+const kPriceColor = Color(0xff366202);
 
 const kDefaultRadius = 24.0;
 const kDefaultPadding = 24.0;

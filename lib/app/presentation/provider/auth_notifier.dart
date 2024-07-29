@@ -36,7 +36,7 @@ class AuthNotifier extends ChangeNotifier {
     notifyListeners();
     final result = await authRepository.login(email, password);
     result.fold(
-      (failure) => loginState.setError(error: failure),
+      (failure) => loginState.setError(error: failure.message),
       (userData) {
         loginState.setSuccess(value: userData);
         user = userData;
@@ -50,7 +50,7 @@ class AuthNotifier extends ChangeNotifier {
     notifyListeners();
     final result = await authRepository.signup(username, email, password);
     result.fold(
-      (failure) => signupState.setError(error: failure),
+      (failure) => signupState.setError(error: failure.message),
       (userData) {
         signupState.setSuccess(value: userData);
         user = userData;
@@ -76,7 +76,7 @@ class AuthNotifier extends ChangeNotifier {
       profilePicture,
     );
     result.fold(
-      (failure) => updateProfileState.setError(error: failure),
+      (failure) => updateProfileState.setError(error: failure.message),
       (userData) {
         updateProfileState.setSuccess();
         user = userData;
@@ -90,7 +90,7 @@ class AuthNotifier extends ChangeNotifier {
     notifyListeners();
     final result = await authRepository.logout();
     result.fold(
-      (failure) => logoutState.setError(error: failure),
+      (failure) => logoutState.setError(error: failure.message),
       (_) => logoutState.setSuccess(),
     );
     notifyListeners();
