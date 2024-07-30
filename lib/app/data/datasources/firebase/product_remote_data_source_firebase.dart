@@ -76,4 +76,17 @@ class ProductRemoteDataSourceFirebase extends ProductRemoteDataSource {
       }
     }
   }
+
+  @override
+  Future<List<ProductModel>> searchProducts(String query) async {
+    QuerySnapshot snapshot = await firestore
+        .collection('products')
+        .where('title_lower', isGreaterThanOrEqualTo: query)
+        .where('title_lower', isLessThanOrEqualTo: '$query\uf8ff')
+        .limit(10)
+        .get();
+    return snapshot.docs
+        .map((e) => ProductModel.fromJson(e.data() as Map<String, dynamic>))
+        .toList();
+  }
 }

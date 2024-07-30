@@ -1,5 +1,6 @@
 import 'package:autotureid/app/presentation/provider/auth_notifier.dart';
 import 'package:autotureid/app/presentation/provider/product_notifier.dart';
+import 'package:autotureid/app/presentation/provider/search_notifier.dart';
 import 'package:autotureid/core/constants.dart';
 import 'package:autotureid/core/router.dart';
 import 'package:autotureid/core/theme.dart';
@@ -29,6 +30,7 @@ class App extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => di.sl<AuthNotifier>()),
         ChangeNotifierProvider(create: (_) => di.sl<ProductNotifier>()),
+        ChangeNotifierProvider(create: (_) => di.sl<SearchNotifier>()),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

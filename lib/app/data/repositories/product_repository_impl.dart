@@ -86,4 +86,24 @@ class ProductRepositoryImpl implements ProductRepository {
       );
     }
   }
+  
+  @override
+  Future<Either<Failure, List<Product>>> searchProducts(String query) async {
+    try {
+      final products = await remoteDataSource.searchProducts(query);
+      return Right(products.map((e) => e.toEntity()).toList());
+    } on SocketException {
+      return Left(ConnectionFailure());
+    } on HandshakeException {
+      return Left(ConnectionFailure());
+    } on ClientException {
+      return Left(ConnectionFailure());
+    } on CustomException catch (e) {
+      return Left(
+        BadRequestFailure(
+          message: e.message,
+        ),
+      );
+    }
+  }
 }

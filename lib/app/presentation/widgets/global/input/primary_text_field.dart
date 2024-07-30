@@ -17,6 +17,8 @@ class PrimaryTextField extends StatefulWidget {
   final double borderRadius;
   final Widget? prefixWidget;
   final void Function(String value)? onChanged;
+  final void Function(bool value)? onFocusChanged;
+  final FocusNode? focusNode;
 
   const PrimaryTextField({
     super.key,
@@ -34,6 +36,8 @@ class PrimaryTextField extends StatefulWidget {
     this.borderRadius = 10,
     this.prefixWidget,
     this.onChanged,
+    this.onFocusChanged,
+    this.focusNode,
   });
 
   @override
@@ -48,8 +52,13 @@ class _PrimaryTextFieldState extends State<PrimaryTextField> {
   @override
   void initState() {
     super.initState();
-    _focusNode = FocusNode();
+    _focusNode = widget.focusNode ?? FocusNode();
     _isObscure = widget.isPassword;
+    _focusNode.addListener(() {
+      if (widget.onFocusChanged != null) {
+        widget.onFocusChanged!(_focusNode.hasFocus);
+      }
+    });
   }
 
   @override

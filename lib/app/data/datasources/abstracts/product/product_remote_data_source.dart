@@ -8,4 +8,6 @@ abstract class ProductRemoteDataSource {
   Future<List<ProductModel>> getLastSeenProducts();
 
   Future<void> addProductToLastSeen(AddProductToLastSeenParameter parameter);
+
+  Future<List<ProductModel>> searchProducts(String query);
 }

@@ -10,6 +10,7 @@ import 'package:autotureid/app/domain/repositories/auth_repository.dart';
 import 'package:autotureid/app/domain/repositories/product_repository.dart';
 import 'package:autotureid/app/presentation/provider/auth_notifier.dart';
 import 'package:autotureid/app/presentation/provider/product_notifier.dart';
+import 'package:autotureid/app/presentation/provider/search_notifier.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -61,6 +62,11 @@ Future<void> init() async {
   );
   sl.registerFactory(
     () => ProductNotifier(
+      productRepository: sl(),
+    ),
+  );
+  sl.registerFactory(
+    () => SearchNotifier(
       productRepository: sl(),
     ),
   );

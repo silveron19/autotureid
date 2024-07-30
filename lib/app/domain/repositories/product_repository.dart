@@ -7,4 +7,6 @@ abstract class ProductRepository {
   Stream<Either<Failure, Product>> getProductDetail(String productId);
   Future<Either<Failure, List<Product>>> getLastSeenProducts();
   Future<Either<Failure, void>> addProductToLastSeen(String productId);
+
+  Future<Either<Failure, List<Product>>> searchProducts(String query);
 }
