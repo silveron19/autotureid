@@ -41,19 +41,26 @@ class NewProductCatalog extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          SizedBox(
-            height: 229,
-            child: ListView.builder(
-              padding: const EdgeInsets.only(left: kDefaultPadding),
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemCount: items.length,
-              itemBuilder: (context, index) {
-                final product = items[index];
-                return NewProductCard(product: product);
-              },
-            ),
-          ),
+          items.isEmpty
+              ? const Center(
+                  child: Text(
+                    'Belum ada produk baru',
+                    style: kSubtitle5TextStyle,
+                  ),
+                )
+              : SizedBox(
+                  height: 229,
+                  child: ListView.builder(
+                    padding: const EdgeInsets.only(left: kDefaultPadding),
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: items.length,
+                    itemBuilder: (context, index) {
+                      final product = items[index];
+                      return NewProductCard(product: product);
+                    },
+                  ),
+                ),
         ],
       ),
     );

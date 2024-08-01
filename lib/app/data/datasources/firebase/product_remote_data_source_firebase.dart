@@ -41,7 +41,7 @@ class ProductRemoteDataSourceFirebase extends ProductRemoteDataSource {
         .collection('products')
         .where('created_at',
             isGreaterThanOrEqualTo:
-                DateTime.now().subtract(const Duration(days: 7)).millisecondsSinceEpoch)
+                Timestamp.fromDate(DateTime.now().subtract(const Duration(days: 7)))).orderBy('created_at', descending: true)
         .limit(10)
         .get();
     return snapshot.docs
@@ -63,7 +63,8 @@ class ProductRemoteDataSourceFirebase extends ProductRemoteDataSource {
       final snapshot = await doc.get();
       if (snapshot.exists) {
         final data = snapshot.data() as Map<String, dynamic>;
-        List<String> lastSeenProducts = data['last_seen_products'] != null ? List<String>.from(data['last_seen_products']) : [];
+        List<String> lastSeenProducts =
+            data['last_seen_products'] != null ? List<String>.from(data['last_seen_products']) : [];
         // if the id is already in the list, remove it first then add it to the end
         if (lastSeenProducts.contains(parameter.productId)) {
           lastSeenProducts.remove(parameter.productId);
