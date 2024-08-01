@@ -17,6 +17,7 @@ class AuthNotifier extends ChangeNotifier {
   final NotifierState<UserData?> signupState = NotifierState();
   final NotifierState<UserData?> updateProfileState = NotifierState();
   final NotifierState<void> logoutState = NotifierState();
+  final NotifierState<void> resetPasswordState = NotifierState();
 
   void getUserFromLocal() {
     getUserFromLocalState.setLoading();
@@ -94,6 +95,17 @@ class AuthNotifier extends ChangeNotifier {
     result.fold(
       (failure) => logoutState.setError(error: failure.message),
       (_) => logoutState.setSuccess(),
+    );
+    notifyListeners();
+  }
+
+  Future<void> resetPassword(String? email) async {
+    resetPasswordState.setLoading();
+    notifyListeners();
+    final result = await authRepository.resetPassword(email);
+    result.fold(
+      (failure) => resetPasswordState.setError(error: failure.message),
+      (_) => resetPasswordState.setSuccess(),
     );
     notifyListeners();
   }

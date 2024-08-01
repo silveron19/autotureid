@@ -25,6 +25,8 @@ abstract class AuthRepository {
     bool deleteProfilePicture,
   );
 
+  Future<Either<Failure, void>> resetPassword(String? email);
+
   Future<Either<Failure, void>> logout();
 
   Future<void> cacheToLocal(UserData userData);

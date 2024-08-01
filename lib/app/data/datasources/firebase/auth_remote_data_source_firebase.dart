@@ -165,4 +165,15 @@ class AuthRemoteDataSourceFirebase implements AuthRemoteDataSource {
 
     return newUserData;
   }
+
+  @override
+  Future<void> resetPassword(ResetPasswordParameter parameter) async {
+    try {
+      final userEmail = parameter.email ?? firebaseAuth.currentUser!.email!;
+
+      await firebaseAuth.sendPasswordResetEmail(email: userEmail);
+    } on FirebaseAuthException catch (e) {
+      throw CustomException(FirebaseMessageParse.parseForgotPasswordError(e.code));
+    }
+  }
 }

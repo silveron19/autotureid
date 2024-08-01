@@ -36,3 +36,9 @@ class UpdateProfileParameter {
     required this.deleteProfilePicture,
   });
 }
+
+class ResetPasswordParameter {
+  final String? email;
+
+  ResetPasswordParameter({required this.email});
+}

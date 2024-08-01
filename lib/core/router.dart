@@ -2,6 +2,7 @@ import 'package:autotureid/app/domain/entities/subscription.dart';
 import 'package:autotureid/app/presentation/pages/home/home_page.dart';
 import 'package:autotureid/app/presentation/pages/home/product_detail_page.dart';
 import 'package:autotureid/app/presentation/pages/profile/edit_profile_page.dart';
+import 'package:autotureid/app/presentation/pages/profile/manage_account_page.dart';
 import 'package:autotureid/app/presentation/pages/profile/profile_page.dart';
 import 'package:autotureid/app/presentation/pages/register/login_screen.dart';
 import 'package:autotureid/app/presentation/pages/register/signup_screen.dart';
@@ -10,6 +11,7 @@ import 'package:autotureid/app/presentation/pages/splash_screen.dart';
 import 'package:autotureid/app/presentation/pages/subscription/change_payment_method_page.dart';
 import 'package:autotureid/app/presentation/pages/subscription/payment_page.dart';
 import 'package:autotureid/app/presentation/pages/subscription/subscription_page.dart';
+import 'package:autotureid/app/presentation/widgets/profile/reset_password_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -124,6 +126,16 @@ final router = GoRouter(
                 GoRoute(
                   path: 'edit',
                   builder: (context, state) => const EditProfilePage(),
+                ),
+                GoRoute(
+                  path: 'manage-account',
+                  builder: (context, state) => const ManageAccountPage(),
+                  routes: [
+                    GoRoute(
+                      path: 'reset-password',
+                      builder: (context, state) => const ResetPasswordPage(),
+                    ),
+                  ],
                 ),
               ],
             ),

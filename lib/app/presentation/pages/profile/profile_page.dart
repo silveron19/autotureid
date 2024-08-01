@@ -1,4 +1,3 @@
-import 'package:autotureid/app/domain/entities/user_data.dart';
 import 'package:autotureid/app/presentation/provider/auth_notifier.dart';
 import 'package:autotureid/app/presentation/widgets/profile/profile_header_information.dart';
 import 'package:autotureid/app/presentation/widgets/profile/profile_option_tile.dart';
@@ -16,8 +15,6 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  late UserData user;
-
   @override
   void initState() {
     super.initState();
@@ -25,46 +22,54 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    user = Provider.of<AuthNotifier>(context, listen: false).user;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profil'),
       ),
       body: Consumer<AuthNotifier>(
-        builder: (context, value, child) => SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(kDefaultPadding),
-            child: Column(
-              children: [
-                ProfileHeaderInformation(user: user),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Akun',
-                      style: kSubtitle5TextStyle,
-                    ),
-                    ProfileOptionTile(
-                      image: R.ASSETS_ICONS_PROFILE_EDIT_PROFILE_PNG,
-                      text: 'Ubah Profil',
-                      onTap: () => context.go('/profile/edit'),
-                    ),
-                    ProfileOptionTile(
-                      image: R.ASSETS_ICONS_PROFILE_SUBSCRIPTION_PNG,
-                      text: 'Langganan',
-                      onTap: () => context.push('/subscription'),
-                    ),
-                    ProfileOptionTile(
-                      image: R.ASSETS_ICONS_PROFILE_ACCOUNT_SETTING_PNG,
-                      text: 'Atur Akun',
-                      onTap: () {},
-                    ),
-                  ],
-                ),
-              ],
+        builder: (context, auth, child) {
+          final user = auth.user;
+          return SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.only(top: kDefaultPadding),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                    child: ProfileHeaderInformation(user: user),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                        child: Text(
+                          'Akun',
+                          style: kSubtitle5TextStyle,
+                        ),
+                      ),
+                      ProfileOptionTile(
+                        image: R.ASSETS_ICONS_PROFILE_EDIT_PROFILE_PNG,
+                        text: 'Ubah Profil',
+                        onTap: () => context.go('/profile/edit'),
+                      ),
+                      ProfileOptionTile(
+                        image: R.ASSETS_ICONS_PROFILE_SUBSCRIPTION_PNG,
+                        text: 'Langganan',
+                        onTap: () => context.push('/subscription'),
+                      ),
+                      ProfileOptionTile(
+                        image: R.ASSETS_ICONS_PROFILE_ACCOUNT_SETTING_PNG,
+                        text: 'Atur Akun',
+                        onTap: () => context.go('/profile/manage-account'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }

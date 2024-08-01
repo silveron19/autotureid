@@ -31,27 +31,6 @@ class FirebaseMessageParse {
     }
   }
 
-  static String parseForgetPasswordError(String error) {
-    switch (error) {
-      case 'auth/invalid-email':
-        return 'Alamat email tidak valid';
-      case 'auth/missing-android-pkg-name':
-        return 'Tidak dapat terhubung ke server';
-      case 'auth/missing-continue-uri':
-        return 'Tidak dapat terhubung ke server';
-      case 'auth/missing-ios-bundle-id':
-        return 'Tidak dapat terhubung ke server';
-      case 'auth/invalid-continue-uri':
-        return 'Terjadi kesalahan';
-      case 'auth/unauthorized-continue-uri':
-        return 'Tidak dapat terhubung ke server';
-      case 'auth/user-not-found':
-        return 'User tidak ditemukan';
-      default:
-        return 'Tidak dapat terhubung ke server';
-    }
-  }
-
   static String parseUpdateEmailError(String error) {
     switch (error) {
       case 'email-already-in-use':
@@ -62,6 +41,27 @@ class FirebaseMessageParse {
         return 'Tidak bisa mengubah email';
       case 'requires-recent-login':
         return 'Silahkan login kembali';
+      default:
+        return 'Tidak dapat terhubung ke server';
+    }
+  }
+
+  static String parseForgotPasswordError(String error) {
+    switch (error) {
+      case 'user-not-found':
+        return 'User tidak ditemukan';
+      case 'invalid-email':
+        return 'Email tidak valid';
+      case 'invalid-verification-code':
+        return 'Kode verifikasi tidak valid';
+      case 'invalid-verification-id':
+        return 'ID verifikasi tidak valid';
+      case 'missing-verification-code':
+        return 'Kode verifikasi tidak ditemukan';
+      case 'missing-verification-id':
+        return 'ID verifikasi tidak ditemukan';
+      case 'session-expired':
+        return 'Sesi telah berakhir';
       default:
         return 'Tidak dapat terhubung ke server';
     }

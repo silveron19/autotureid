@@ -12,10 +12,16 @@ const kTitle6TextStyle = TextStyle(
   fontWeight: kFontweightBold,
 );
 
+const kTitle5TextStyle = TextStyle(
+  fontSize: 16,
+  fontWeight: kFontweightBold,
+);
+
 const kTitle4TextStyle = TextStyle(
   fontSize: 18,
   fontWeight: kFontweightBold,
 );
+
 const kTitle1TextStyle = TextStyle(
   fontSize: 32,
   fontWeight: kFontweightBold,

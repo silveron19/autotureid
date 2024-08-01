@@ -154,4 +154,26 @@ class AuthRepositoryImpl implements AuthRepository {
       );
     }
   }
+  
+  @override
+  Future<Either<Failure, void>> resetPassword(String? email) async {
+    try {
+      await remoteDataSource.resetPassword(
+        ResetPasswordParameter(email: email),
+      );
+      return const Right(null);
+    } on SocketException {
+      return Left(ConnectionFailure());
+    } on HandshakeException {
+      return Left(ConnectionFailure());
+    } on ClientException {
+      return Left(ConnectionFailure());
+    } on CustomException catch (e) {
+      return Left(
+        BadRequestFailure(
+          message: e.message,
+        ),
+      );
+    }
+  }
 }
