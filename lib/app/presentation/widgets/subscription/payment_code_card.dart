@@ -1,5 +1,6 @@
 import 'package:autotureid/app/domain/entities/payment_method.dart';
 import 'package:autotureid/app/presentation/widgets/global/primary_elevated_button.dart';
+import 'package:autotureid/const/resource.dart';
 import 'package:autotureid/core/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,7 +16,6 @@ class PaymentCodeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = Theme.of(context).colorScheme;
     return Container(
       padding: const EdgeInsets.fromLTRB(
         16,
@@ -24,7 +24,10 @@ class PaymentCodeCard extends StatelessWidget {
         kDefaultPadding,
       ),
       decoration: BoxDecoration(
-        color: color.primary,
+        image: const DecorationImage(
+          image: AssetImage(R.ASSETS_IMAGES_SUBSCRIPTION_CARD_PNG),
+          fit: BoxFit.cover,
+        ),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Padding(

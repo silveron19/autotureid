@@ -58,7 +58,6 @@ class SubscriptionCard extends StatelessWidget {
               kDefaultPadding,
             ),
             decoration: BoxDecoration(
-              // color: color.primary,
               image: const DecorationImage(
                 image: AssetImage(R.ASSETS_IMAGES_SUBSCRIPTION_CARD_PNG),
                 fit: BoxFit.cover,
