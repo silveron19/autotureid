@@ -71,7 +71,7 @@ class ScaffoldWithNavBar extends StatelessWidget {
                       child: Image(
                         image: const AssetImage(R.ASSETS_ICONS_HOME_PNG),
                         color: navigationShell.currentIndex == 0 ? activeColor : inActiveColor,
-                        width: 24,
+                        width: 32,
                       ),
                     ),
                     label: 'Beranda',
@@ -80,9 +80,9 @@ class ScaffoldWithNavBar extends StatelessWidget {
                     icon: Padding(
                       padding: const EdgeInsets.only(top: 12),
                       child: Image(
-                        image: const AssetImage(R.ASSETS_ICONS_AR_PNG),
+                        image: const AssetImage(R.ASSETS_ICONS_ARTURE_PNG),
                         color: navigationShell.currentIndex == 1 ? activeColor : inActiveColor,
-                        width: 24,
+                        width: 32,
                       ),
                     ),
                     label: 'ARTure',
@@ -91,9 +91,9 @@ class ScaffoldWithNavBar extends StatelessWidget {
                     icon: Padding(
                       padding: const EdgeInsets.only(top: 12),
                       child: Image(
-                        image: const AssetImage(R.ASSETS_ICONS_SUBSCRIBE_PNG),
+                        image: const AssetImage(R.ASSETS_ICONS_PROFILE_PNG),
                         color: navigationShell.currentIndex == 2 ? activeColor : inActiveColor,
-                        width: 24,
+                        width: 32,
                       ),
                     ),
                     label: 'Profil',

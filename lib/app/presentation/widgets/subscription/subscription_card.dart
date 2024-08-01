@@ -2,6 +2,7 @@ import 'package:autotureid/app/domain/entities/subscription.dart';
 import 'package:autotureid/app/domain/entities/user_plan.dart';
 import 'package:autotureid/app/presentation/widgets/global/primary_elevated_button.dart';
 import 'package:autotureid/app/presentation/widgets/subscription/premium_benefit_field.dart';
+import 'package:autotureid/const/resource.dart';
 import 'package:autotureid/core/constants.dart';
 import 'package:autotureid/core/utils/parse_date.dart';
 import 'package:autotureid/core/utils/parse_price.dart';
@@ -20,7 +21,6 @@ class SubscriptionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = Theme.of(context).colorScheme;
     final buttonText = userPlan?.endDate == null
         ? 'Beli'
         : '${ParseDate.calculateDaysLeftFromNow(userPlan!.endDate!)} hari lagi';
@@ -58,7 +58,11 @@ class SubscriptionCard extends StatelessWidget {
               kDefaultPadding,
             ),
             decoration: BoxDecoration(
-              color: color.primary,
+              // color: color.primary,
+              image: const DecorationImage(
+                image: AssetImage(R.ASSETS_IMAGES_SUBSCRIPTION_CARD_PNG),
+                fit: BoxFit.cover,
+              ),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Row(

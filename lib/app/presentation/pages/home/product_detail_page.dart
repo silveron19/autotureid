@@ -115,7 +115,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(product.title, style: kTitle4TextStyle),
+                            Text(product.title, style: kTitle2TextStyle),
                             const SizedBox(height: 4),
                             Text(
                               'Harga: ${ParsePrice.parsePriceToRupiah(product.price)}',
@@ -141,11 +141,18 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          const Text('Deskripsi', style: kTitle4TextStyle),
+                                          Text(
+                                            'Deskripsi',
+                                            style: kTitle4TextStyle.copyWith(color: Colors.black),
+                                          ),
                                           const SizedBox(height: 8),
-                                          const Divider(),
+                                          const Divider(color: Colors.black),
                                           const SizedBox(height: 8),
-                                          Text(product.desc, style: kSubtitle5TextStyle),
+                                          Text(
+                                            product.desc,
+                                            style:
+                                                kSubtitle5TextStyle.copyWith(color: Colors.black),
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -169,7 +176,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                     ),
                                     child: Text(
                                       'Buy Now',
-                                      style: kSubtitle5TextStyle.copyWith(color: color.surface),
+                                      style: kTitle5TextStyle.copyWith(
+                                        color: color.surface,
+                                      ),
                                     ),
                                   ),
                                 ),

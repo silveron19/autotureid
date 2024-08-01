@@ -4,14 +4,17 @@
 class R {
   const R._();
 
-  /// ![preview](file:///Users/mfshobur/Documents/flutter/autotureid/assets/icons/ar.png)
-  static const String ASSETS_ICONS_AR_PNG = 'assets/icons/ar.png';
+  /// ![preview](file:///Users/mfshobur/Documents/flutter/autotureid/assets/icons/arture.png)
+  static const String ASSETS_ICONS_ARTURE_PNG = 'assets/icons/arture.png';
 
   /// ![preview](file:///Users/mfshobur/Documents/flutter/autotureid/assets/icons/home.png)
   static const String ASSETS_ICONS_HOME_PNG = 'assets/icons/home.png';
 
   /// ![preview](file:///Users/mfshobur/Documents/flutter/autotureid/assets/icons/logout.png)
   static const String ASSETS_ICONS_LOGOUT_PNG = 'assets/icons/logout.png';
+
+  /// ![preview](file:///Users/mfshobur/Documents/flutter/autotureid/assets/icons/profile.png)
+  static const String ASSETS_ICONS_PROFILE_PNG = 'assets/icons/profile.png';
 
   /// ![preview](file:///Users/mfshobur/Documents/flutter/autotureid/assets/icons/profile_account_setting.png)
   static const String ASSETS_ICONS_PROFILE_ACCOUNT_SETTING_PNG =
@@ -43,4 +46,8 @@ class R {
   /// ![preview](file:///Users/mfshobur/Documents/flutter/autotureid/assets/images/rotan_seat.png)
   static const String ASSETS_IMAGES_ROTAN_SEAT_PNG =
       'assets/images/rotan_seat.png';
+
+  /// ![preview](file:///Users/mfshobur/Documents/flutter/autotureid/assets/images/subscription_card.png)
+  static const String ASSETS_IMAGES_SUBSCRIPTION_CARD_PNG =
+      'assets/images/subscription_card.png';
 }

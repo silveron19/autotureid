@@ -36,6 +36,7 @@ class ProfileOptionTile extends StatelessWidget {
                 image,
                 width: 25,
                 height: 25,
+                color: color.onSurface,
               ),
               const SizedBox(width: 8),
               Expanded(

@@ -179,6 +179,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         style: TextStyle(
                           fontWeight: kFontweightBold,
                           fontSize: 16,
+                          color: Colors.black,
                         ),
                       ),
                     ),

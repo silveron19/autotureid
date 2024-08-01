@@ -28,7 +28,7 @@ class _UpdateUserProfileCircleState extends State<UpdateUserProfileCircle> {
 
   Widget? getChild(context) {
     final color = Theme.of(context).colorScheme;
-    if (widget.deleteProfileNotifier.value && widget.imageNotifier.value == null) {
+    if (widget.imageNotifier.value == null) {
       return Center(
         child: Text(
           widget.username[0].toUpperCase(),

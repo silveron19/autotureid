@@ -17,6 +17,7 @@ class ManageAccountTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme;
     return InkWell(
       onTap: onTap,
       child: Padding(
@@ -29,6 +30,7 @@ class ManageAccountTile extends StatelessWidget {
               image,
               width: 25,
               height: 25,
+              color: color.onSurface,
             ),
             const SizedBox(width: 16),
             Expanded(

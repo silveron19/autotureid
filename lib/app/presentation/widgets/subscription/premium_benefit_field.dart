@@ -25,12 +25,14 @@ class SubscriptionDescField extends StatelessWidget {
               fontSize: 14,
             ),
           ),
+          const SizedBox(width: 4),
           Expanded(
             child: Text(
               subscriptionDesc.title,
               style: const TextStyle(
                 fontWeight: kFontweightBold,
                 fontSize: 14,
+                color: Colors.black,
               ),
             ),
           ),

@@ -44,9 +44,19 @@ class _HomeSearchLayoutState extends State<HomeSearchLayout> {
                           vertical: 16,
                           horizontal: kDefaultPadding,
                         ),
-                        child: Text(
-                          product.title,
-                          style: kSubtitle5TextStyle,
+                        child: Row(
+                          children: [
+                            Image.network(
+                              product.picture,
+                              width: 30,
+                              height: 30,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              product.title,
+                              style: kSubtitle5TextStyle,
+                            ),
+                          ],
                         ),
                       ),
                     ),
