@@ -13,6 +13,10 @@ class R {
   /// ![preview](file:///Users/mfshobur/Documents/flutter/autotureid/assets/icons/logout.png)
   static const String ASSETS_ICONS_LOGOUT_PNG = 'assets/icons/logout.png';
 
+  /// ![preview](file:///Users/mfshobur/Documents/flutter/autotureid/assets/icons/model_arrow.png)
+  static const String ASSETS_ICONS_MODEL_ARROW_PNG =
+      'assets/icons/model_arrow.png';
+
   /// ![preview](file:///Users/mfshobur/Documents/flutter/autotureid/assets/icons/profile.png)
   static const String ASSETS_ICONS_PROFILE_PNG = 'assets/icons/profile.png';
 
