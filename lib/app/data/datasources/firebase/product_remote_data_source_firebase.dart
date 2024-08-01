@@ -41,7 +41,8 @@ class ProductRemoteDataSourceFirebase extends ProductRemoteDataSource {
         .collection('products')
         .where('created_at',
             isGreaterThanOrEqualTo:
-                Timestamp.fromDate(DateTime.now().subtract(const Duration(days: 7)))).orderBy('created_at', descending: true)
+                Timestamp.fromDate(DateTime.now().subtract(const Duration(days: 7))))
+        .orderBy('created_at', descending: true)
         .limit(10)
         .get();
     return snapshot.docs
@@ -90,6 +91,22 @@ class ProductRemoteDataSourceFirebase extends ProductRemoteDataSource {
         .limit(10)
         .get();
     return snapshot.docs
+        .map((e) => ProductModel.fromJson(e.data() as Map<String, dynamic>))
+        .toList();
+  }
+
+  @override
+  Future<List<ProductModel>> getAllProducts(GetAllProductsParameter parameter) async {
+    Query query =
+        firestore.collection('products').orderBy('created_at', descending: true).limit(10);
+
+    if (parameter.productModel != null) {
+      query = query.startAfter([parameter.productModel!.createdAt]);
+    }
+
+    final snapshots = await query.get();
+
+    return snapshots.docs
         .map((e) => ProductModel.fromJson(e.data() as Map<String, dynamic>))
         .toList();
   }

@@ -6,6 +6,7 @@ class Product {
   final int price;
   final String picture;
   final String model;
+  final DateTime createdAt;
 
   Product({
     required this.id,
@@ -15,5 +16,6 @@ class Product {
     required this.price,
     required this.picture,
     required this.model,
+    required this.createdAt,
   });
 }

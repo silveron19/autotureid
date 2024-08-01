@@ -13,11 +13,50 @@ class ProductNotifier extends ChangeNotifier {
   ProductNotifier({required this.productRepository});
 
   NotifierState<void> getHomeProductsState = NotifierState();
+  NotifierState<List<Product>> allProductsState = NotifierState();
+  NotifierState<void> fetchMoreProductsState = NotifierState();
   NotifierState<List<Product>> newProductsState = NotifierState();
   NotifierState<List<Product>> lastSeenProductsState = NotifierState();
   NotifierState<Product> productDetailState = NotifierState();
 
   StreamSubscription<Either<Failure, Product>>? _productDetailSubscription;
+
+  Future<void> getAllProducts() async {
+    allProductsState.setLoading();
+    notifyListeners();
+
+    final result = await productRepository.getAllProducts(null);
+
+    result.fold(
+      (failure) {
+        allProductsState.setError(error: failure.message);
+        notifyListeners();
+      },
+      (products) {
+        allProductsState.setSuccess(value: products);
+        notifyListeners();
+      },
+    );
+    notifyListeners();
+  }
+
+  Future<void> fetchMoreProducts(Product lastProduct) async {
+    fetchMoreProductsState.setLoading();
+    notifyListeners();
+
+    final result = await productRepository.getAllProducts(lastProduct);
+
+    result.fold(
+      (failure) {
+        fetchMoreProductsState.setError(error: failure.message);
+      },
+      (products) {
+        fetchMoreProductsState.setSuccess();
+        allProductsState.value!.addAll(products);
+      },
+    );
+    notifyListeners();
+  }
 
   Future<void> getNewProducts() async {
     newProductsState.setLoading();

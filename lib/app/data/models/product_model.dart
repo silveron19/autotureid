@@ -1,4 +1,5 @@
 import 'package:autotureid/app/domain/entities/product.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProductModel {
   final String id;
@@ -8,6 +9,7 @@ class ProductModel {
   final int price;
   final String picture;
   final String model;
+  final Timestamp createdAt;
 
   ProductModel({
     required this.id,
@@ -17,6 +19,7 @@ class ProductModel {
     required this.price,
     required this.picture,
     required this.model,
+    required this.createdAt,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
@@ -28,6 +31,7 @@ class ProductModel {
       price: json['price'],
       picture: json['picture'],
       model: json['model'],
+      createdAt: json['created_at'],
     );
   }
 
@@ -40,6 +44,7 @@ class ProductModel {
       price: product.price,
       picture: product.picture,
       model: product.model,
+      createdAt: Timestamp.fromDate(product.createdAt),
     );
   }
 
@@ -52,6 +57,7 @@ class ProductModel {
       'price': price,
       'picture': picture,
       'model': model,
+      'created_at': createdAt,
     };
   }
 
@@ -64,6 +70,7 @@ class ProductModel {
       price: price,
       picture: picture,
       model: model,
+      createdAt: createdAt.toDate(),
     );
   }
 
@@ -75,6 +82,7 @@ class ProductModel {
     int? price,
     String? picture,
     String? model,
+    Timestamp? createdAt,
   }) {
     return ProductModel(
       id: id ?? this.id,
@@ -84,6 +92,7 @@ class ProductModel {
       price: price ?? this.price,
       picture: picture ?? this.picture,
       model: model ?? this.model,
+      createdAt: createdAt ?? this.createdAt,
     );
   }
 }

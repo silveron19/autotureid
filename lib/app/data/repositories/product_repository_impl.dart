@@ -18,8 +18,7 @@ class ProductRepositoryImpl implements ProductRepository {
   @override
   Future<Either<Failure, List<Product>>> getLastSeenProducts() async {
     try {
-      final products = await remoteDataSource
-          .getLastSeenProducts();
+      final products = await remoteDataSource.getLastSeenProducts();
       return Right(products.map((e) => e.toEntity()).toList());
     } on SocketException {
       return Left(ConnectionFailure());
@@ -58,7 +57,9 @@ class ProductRepositoryImpl implements ProductRepository {
 
   @override
   Stream<Either<Failure, Product>> getProductDetail(String productId) {
-    return remoteDataSource.getProductDetail(GetProductDetailParameter(productId: productId)).map((snapshot) {
+    return remoteDataSource
+        .getProductDetail(GetProductDetailParameter(productId: productId))
+        .map((snapshot) {
       try {
         return Right(ProductModel.fromJson(snapshot.data() as Map<String, dynamic>).toEntity());
       } catch (e) {
@@ -66,11 +67,12 @@ class ProductRepositoryImpl implements ProductRepository {
       }
     });
   }
-  
+
   @override
   Future<Either<Failure, void>> addProductToLastSeen(String productId) async {
     try {
-      await remoteDataSource.addProductToLastSeen(AddProductToLastSeenParameter(productId: productId));
+      await remoteDataSource
+          .addProductToLastSeen(AddProductToLastSeenParameter(productId: productId));
       return const Right(null);
     } on SocketException {
       return Left(ConnectionFailure());
@@ -86,11 +88,34 @@ class ProductRepositoryImpl implements ProductRepository {
       );
     }
   }
-  
+
   @override
   Future<Either<Failure, List<Product>>> searchProducts(String query) async {
     try {
       final products = await remoteDataSource.searchProducts(query);
+      return Right(products.map((e) => e.toEntity()).toList());
+    } on SocketException {
+      return Left(ConnectionFailure());
+    } on HandshakeException {
+      return Left(ConnectionFailure());
+    } on ClientException {
+      return Left(ConnectionFailure());
+    } on CustomException catch (e) {
+      return Left(
+        BadRequestFailure(
+          message: e.message,
+        ),
+      );
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Product>>> getAllProducts(Product? lastProduct) async {
+    try {
+      final products = await remoteDataSource.getAllProducts(
+        GetAllProductsParameter(
+            productModel: lastProduct != null ? ProductModel.fromEntity(lastProduct) : null),
+      );
       return Right(products.map((e) => e.toEntity()).toList());
     } on SocketException {
       return Left(ConnectionFailure());
