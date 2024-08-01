@@ -21,11 +21,11 @@ class ProductNotifier extends ChangeNotifier {
 
   StreamSubscription<Either<Failure, Product>>? _productDetailSubscription;
 
-  Future<void> getAllProducts() async {
+  Future<void> getAllProducts(String? title) async {
     allProductsState.setLoading();
     notifyListeners();
 
-    final result = await productRepository.getAllProducts(null);
+    final result = await productRepository.getAllProducts(title, null);
 
     result.fold(
       (failure) {
@@ -40,11 +40,12 @@ class ProductNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetchMoreProducts(Product lastProduct) async {
+  Future<void> fetchMoreProducts(String? title) async {
     fetchMoreProductsState.setLoading();
     notifyListeners();
 
-    final result = await productRepository.getAllProducts(lastProduct);
+    final lastProduct = allProductsState.value!.last;
+    final result = await productRepository.getAllProducts(title, lastProduct);
 
     result.fold(
       (failure) {

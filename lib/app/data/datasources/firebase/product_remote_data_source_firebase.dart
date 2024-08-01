@@ -88,7 +88,7 @@ class ProductRemoteDataSourceFirebase extends ProductRemoteDataSource {
         .collection('products')
         .where('title_lower', isGreaterThanOrEqualTo: query)
         .where('title_lower', isLessThanOrEqualTo: '$query\uf8ff')
-        .limit(10)
+        .limit(5)
         .get();
     return snapshot.docs
         .map((e) => ProductModel.fromJson(e.data() as Map<String, dynamic>))
@@ -98,7 +98,11 @@ class ProductRemoteDataSourceFirebase extends ProductRemoteDataSource {
   @override
   Future<List<ProductModel>> getAllProducts(GetAllProductsParameter parameter) async {
     Query query =
-        firestore.collection('products').orderBy('created_at', descending: true).limit(10);
+        firestore.collection('products').orderBy('created_at', descending: true).limit(15);
+
+    if (parameter.title != null) {
+      query = query.where('title_lower', isGreaterThanOrEqualTo: parameter.title!);
+    }
 
     if (parameter.productModel != null) {
       query = query.startAfter([parameter.productModel!.createdAt]);

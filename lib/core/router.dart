@@ -1,4 +1,5 @@
 import 'package:autotureid/app/domain/entities/subscription.dart';
+import 'package:autotureid/app/presentation/pages/home/all_products_page.dart';
 import 'package:autotureid/app/presentation/pages/home/home_page.dart';
 import 'package:autotureid/app/presentation/pages/home/product_detail_page.dart';
 import 'package:autotureid/app/presentation/pages/profile/edit_profile_page.dart';
@@ -81,24 +82,10 @@ final router = GoRouter(
               path: '/home',
               builder: (context, state) => const HomePage(),
               routes: [
-                // GoRoute(
-                //   path: 'subscription',
-                //   builder: (context, state) => const SubscriptionPage(),
-                //   routes: [
-                //     GoRoute(
-                //       path: 'payment',
-                //       builder: (context, state) => PaymentPage(
-                //         subscription: state.extra as Subscription,
-                //       ),
-                //       routes: [
-                //         GoRoute(
-                //           path: 'payment-method',
-                //           builder: (context, state) => const ChangePaymentMethodPage(),
-                //         ),
-                //       ],
-                //     ),
-                //   ],
-                // ),
+                GoRoute(
+                  path: 'all-products',
+                  builder: (context, state) => const AllProductsPage(),
+                ),
                 GoRoute(
                   path: 'detail/:id',
                   builder: (context, state) => ProductDetailPage(

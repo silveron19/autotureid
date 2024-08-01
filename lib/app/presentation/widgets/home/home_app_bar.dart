@@ -38,9 +38,11 @@ class _HomeAppBarState extends State<HomeAppBar> {
             return Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                notifier.searchMode
+                notifier.searchMode || notifier.allProductMode
                     ? IconButton(
-                        onPressed: notifier.onSearchModeOff,
+                        onPressed: notifier.allProductMode
+                            ? notifier.onAllProductModeOff
+                            : notifier.onSearchModeOff,
                         icon: const Icon(Icons.arrow_back),
                       )
                     : const SizedBox(),
@@ -55,6 +57,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
                     borderRadius: 100,
                     focusNode: notifier.searchFocusNode,
                     onChanged: notifier.onSearchChanged,
+                    onComplete: notifier.onSearchSubmit,
                     onFocusChanged: (value) {
                       if (value) {
                         notifier.onSearchModeOn();

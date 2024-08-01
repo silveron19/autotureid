@@ -1,4 +1,5 @@
 import 'package:autotureid/app/presentation/provider/product_notifier.dart';
+import 'package:autotureid/app/presentation/provider/search_notifier.dart';
 import 'package:autotureid/app/presentation/widgets/home/new_product_card.dart';
 import 'package:autotureid/core/constants.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,8 @@ class NewProductCatalog extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () =>
+                      Provider.of<SearchNotifier>(context, listen: false).onAllProductModeOn(),
                   icon: const Icon(
                     Icons.arrow_forward_rounded,
                   ),

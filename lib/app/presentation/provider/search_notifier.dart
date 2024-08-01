@@ -13,6 +13,19 @@ class SearchNotifier extends ChangeNotifier {
   final TextEditingController searchController = TextEditingController();
   final FocusNode searchFocusNode = FocusNode();
   bool searchMode = false;
+  bool allProductMode = false;
+
+  void onAllProductModeOn() {
+    searchController.clear();
+    allProductMode = true;
+    notifyListeners();
+  }
+
+  void onAllProductModeOff() {
+    allProductMode = false;
+    searchController.clear();
+    notifyListeners();
+  }
 
   void onSearchModeOn() {
     searchMode = true;
@@ -25,17 +38,6 @@ class SearchNotifier extends ChangeNotifier {
     searchController.clear();
     searchFocusNode.unfocus();
     searchProductsState.reset();
-    notifyListeners();
-  }
-
-  void onSearchModeToggle() {
-    searchMode = !searchMode;
-    if (searchMode) {
-      searchFocusNode.requestFocus();
-    } else {
-      searchController.clear();
-      searchFocusNode.unfocus();
-    }
     notifyListeners();
   }
 
@@ -58,6 +60,13 @@ class SearchNotifier extends ChangeNotifier {
         searchProductsState.setSuccess(value: products);
       },
     );
+    notifyListeners();
+  }
+
+  void onSearchSubmit() {
+    searchMode = false;
+    searchFocusNode.unfocus();
+    allProductMode = true;
     notifyListeners();
   }
 }

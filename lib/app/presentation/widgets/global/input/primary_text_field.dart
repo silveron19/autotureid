@@ -63,7 +63,7 @@ class _PrimaryTextFieldState extends State<PrimaryTextField> {
 
   @override
   void dispose() {
-    _focusNode.dispose();
+    // _focusNode.dispose();
     super.dispose();
   }
 

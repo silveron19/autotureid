@@ -1,3 +1,4 @@
+import 'package:autotureid/app/presentation/pages/home/all_products_page.dart';
 import 'package:autotureid/app/presentation/provider/product_notifier.dart';
 import 'package:autotureid/app/presentation/provider/search_notifier.dart';
 import 'package:autotureid/app/presentation/provider/subscription_notifier.dart';
@@ -7,7 +8,7 @@ import 'package:autotureid/app/presentation/widgets/global/primary_action_button
 import 'package:autotureid/app/presentation/widgets/home/home_app_bar.dart';
 import 'package:autotureid/app/presentation/widgets/home/home_search_layout.dart';
 import 'package:autotureid/app/presentation/widgets/home/last_seen_catalog.dart';
-import 'package:autotureid/app/presentation/widgets/home/new_prodcut_catalog.dart';
+import 'package:autotureid/app/presentation/widgets/home/new_product_catalog.dart';
 import 'package:autotureid/core/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -33,7 +34,7 @@ class _HomePageState extends State<HomePage> {
     return Consumer<SearchNotifier>(
       builder: (context, searchNotifier, child) {
         return PopScope(
-          canPop: !searchNotifier.searchMode,
+          canPop: !searchNotifier.searchMode || !searchNotifier.allProductMode,
           onPopInvoked: (didPop) {
             searchNotifier.onSearchModeOff();
           },
@@ -62,32 +63,39 @@ class _HomePageState extends State<HomePage> {
                           onRetry: () => value.getHomeProducts(),
                         );
                       }
+
                       return searchNotifier.searchMode
                           ? const HomeSearchLayout()
-                          : SingleChildScrollView(
-                              padding: const EdgeInsets.only(top: kDefaultPadding),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  subscriptionNotifier.getUserPlanState.value!.startDate != null
-                                      ? const SizedBox()
-                                      : PrimaryActionButton(
-                                          text: 'Gabung Premium',
-                                          onTap: () => context.push('/subscription'),
-                                        ),
-                                  const NewProductCatalog(),
-                                  Consumer<ProductNotifier>(
-                                    builder: (context, value, child) {
-                                      final state = value.lastSeenProductsState;
-                                      if (state.isLoading()) {
-                                        return const CircularLoadingIndicator();
-                                      }
-                                      return const LastSeenCatalog();
-                                    },
+                          : searchNotifier.allProductMode
+                              ? AllProductsPage(
+                                  title: searchNotifier.searchController.text.isEmpty
+                                      ? null
+                                      : searchNotifier.searchController.text,
+                                )
+                              : SingleChildScrollView(
+                                  padding: const EdgeInsets.only(top: kDefaultPadding),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      subscriptionNotifier.getUserPlanState.value!.startDate != null
+                                          ? const SizedBox()
+                                          : PrimaryActionButton(
+                                              text: 'Gabung Premium',
+                                              onTap: () => context.push('/subscription'),
+                                            ),
+                                      const NewProductCatalog(),
+                                      Consumer<ProductNotifier>(
+                                        builder: (context, value, child) {
+                                          final state = value.lastSeenProductsState;
+                                          if (state.isLoading()) {
+                                            return const CircularLoadingIndicator();
+                                          }
+                                          return const LastSeenCatalog();
+                                        },
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                            );
+                                );
                     },
                   );
                 },

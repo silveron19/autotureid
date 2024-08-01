@@ -110,10 +110,11 @@ class ProductRepositoryImpl implements ProductRepository {
   }
 
   @override
-  Future<Either<Failure, List<Product>>> getAllProducts(Product? lastProduct) async {
+  Future<Either<Failure, List<Product>>> getAllProducts(String? title, Product? lastProduct) async {
     try {
       final products = await remoteDataSource.getAllProducts(
         GetAllProductsParameter(
+          title: title,
             productModel: lastProduct != null ? ProductModel.fromEntity(lastProduct) : null),
       );
       return Right(products.map((e) => e.toEntity()).toList());

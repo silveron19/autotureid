@@ -18,18 +18,6 @@ class LastSeenProductCard extends StatelessWidget {
     final color = Theme.of(context).colorScheme;
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
-      // padding: const EdgeInsets.all(16),
-      // decoration: BoxDecoration(
-      //   color: color.surface,
-      //   borderRadius: BorderRadius.circular(16),
-      //   boxShadow: [
-      //     BoxShadow(
-      //       color: color.onSurface.withOpacity(0.3),
-      //       blurRadius: 8,
-      //       offset: const Offset(0, 4),
-      //     ),
-      //   ],
-      // ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -68,7 +56,7 @@ class LastSeenProductCard extends StatelessWidget {
             text: 'Lihat Detail',
             dense: true,
             borderRadius: 100,
-            onPressed: () => context.push('/home/detail/${product.id}'),
+            onPressed: () => context.go('/home/detail/${product.id}'),
           ),
         ],
       ),
