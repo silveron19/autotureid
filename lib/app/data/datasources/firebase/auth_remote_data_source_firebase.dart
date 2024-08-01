@@ -1,5 +1,6 @@
 import 'package:autotureid/app/data/datasources/abstracts/auth/auth_remote_data_source.dart';
 import 'package:autotureid/app/data/models/user_data_model.dart';
+import 'package:autotureid/app/data/models/user_plan_model.dart';
 import 'package:autotureid/core/custom_exception.dart';
 import 'package:autotureid/core/parameter/auth_parameter.dart';
 import 'package:autotureid/core/utils/firebase_message_parse.dart';
@@ -55,16 +56,43 @@ class AuthRemoteDataSourceFirebase implements AuthRemoteDataSource {
       throw CustomException(FirebaseMessageParse.parseSignUpError(e.code));
     }
 
-    // create user data in firestore
-    final userDoc = firestore.collection('users').doc(userCredential.user!.uid);
+    late UserDataModel userData;
 
-    final userData = UserDataModel(
-      id: userCredential.user!.uid,
-      username: parameter.username,
-      email: parameter.email,
-    );
+    // create user plan data in firestore with transaction
+    await firestore.runTransaction((transaction) async {
+      final userDoc = firestore.collection('users').doc(userCredential.user!.uid);
+
+      userData = UserDataModel(
+        id: userCredential.user!.uid,
+        username: parameter.username,
+        email: parameter.email,
+      );
+
+      // create user data model
+      transaction.set(userDoc, userData.toJson());
+
+      final userPlanDocRef = firestore.collection('user_plans').doc();
+
+      // get plan data from firestore where type is basic
+      final planDoc = await firestore.collection('plans').where('type', isEqualTo: 'basic').get();
+
+      final planData = planDoc.docs.first.data();
+
+      final userPlan = UserPlanModel(
+        id: userPlanDocRef.id,
+        userId: userData.id,
+        planId: planData['id'],
+        startDate: null,
+        endDate: null,
+        renewalDate: null,
+        status: 'active',
+      );
+
+      // create user plan data model
+      transaction.set(userPlanDocRef, userPlan.toJson());
+    });
+
     // create user data model
-    await userDoc.set(userData.toJson());
 
     return userData;
   }

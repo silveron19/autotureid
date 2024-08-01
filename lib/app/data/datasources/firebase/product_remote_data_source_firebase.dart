@@ -21,6 +21,9 @@ class ProductRemoteDataSourceFirebase extends ProductRemoteDataSource {
     final snapshot = await doc.get();
     if (snapshot.exists) {
       final data = snapshot.data() as Map<String, dynamic>;
+      if (data['last_seen_products'] == null) {
+        return [];
+      }
       final List<String> lastSeenProducts = List<String>.from(data['last_seen_products']);
       if (lastSeenProducts.isEmpty) {
         return [];
@@ -60,7 +63,7 @@ class ProductRemoteDataSourceFirebase extends ProductRemoteDataSource {
       final snapshot = await doc.get();
       if (snapshot.exists) {
         final data = snapshot.data() as Map<String, dynamic>;
-        List<String> lastSeenProducts = List<String>.from(data['last_seen_products']);
+        List<String> lastSeenProducts = data['last_seen_products'] != null ? List<String>.from(data['last_seen_products']) : [];
         // if the id is already in the list, remove it first then add it to the end
         if (lastSeenProducts.contains(parameter.productId)) {
           lastSeenProducts.remove(parameter.productId);

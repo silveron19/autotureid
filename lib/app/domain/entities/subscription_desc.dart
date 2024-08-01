@@ -1,8 +1,8 @@
-class PremiumBenefit {
+class SubscriptionDesc {
   final String title;
   final bool isAvailable;
 
-  PremiumBenefit({
+  SubscriptionDesc({
     required this.title,
     required this.isAvailable,
   });

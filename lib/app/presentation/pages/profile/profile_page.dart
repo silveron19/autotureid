@@ -47,12 +47,12 @@ class _ProfilePageState extends State<ProfilePage> {
                     ProfileOptionTile(
                       image: R.ASSETS_ICONS_PROFILE_EDIT_PROFILE_PNG,
                       text: 'Ubah Profil',
-                      onTap: () => context.push('/profile/edit'),
+                      onTap: () => context.go('/profile/edit'),
                     ),
                     ProfileOptionTile(
                       image: R.ASSETS_ICONS_PROFILE_SUBSCRIPTION_PNG,
                       text: 'Langganan',
-                      onTap: () {},
+                      onTap: () => context.push('/subscription'),
                     ),
                     ProfileOptionTile(
                       image: R.ASSETS_ICONS_PROFILE_ACCOUNT_SETTING_PNG,

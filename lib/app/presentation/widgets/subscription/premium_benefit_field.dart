@@ -1,18 +1,18 @@
-import 'package:autotureid/app/domain/entities/premium_benefit.dart';
+import 'package:autotureid/app/domain/entities/subscription_desc.dart';
 import 'package:autotureid/core/constants.dart';
 import 'package:flutter/material.dart';
 
-class PremiumBenefitField extends StatelessWidget {
-  const PremiumBenefitField({
+class SubscriptionDescField extends StatelessWidget {
+  const SubscriptionDescField({
     super.key,
-    required this.premiumBenefit,
+    required this.subscriptionDesc,
   });
 
-  final PremiumBenefit premiumBenefit;
+  final SubscriptionDesc subscriptionDesc;
 
   @override
   Widget build(BuildContext context) {
-    final benefitIcon = premiumBenefit.isAvailable ? '✅' : '❌';
+    final benefitIcon = subscriptionDesc.isAvailable ? '✅' : '❌';
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: Row(
@@ -27,7 +27,7 @@ class PremiumBenefitField extends StatelessWidget {
           ),
           Expanded(
             child: Text(
-              premiumBenefit.title,
+              subscriptionDesc.title,
               style: const TextStyle(
                 fontWeight: kFontweightBold,
                 fontSize: 14,

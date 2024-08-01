@@ -1,21 +1,17 @@
-import 'package:autotureid/app/domain/entities/premium_benefit.dart';
+import 'package:autotureid/app/domain/entities/subscription_desc.dart';
 
 class Subscription {
   final String id;
+  final String type;
   final String title;
-  final List<PremiumBenefit> premiumBenefits;
-  final DateTime? paymentDeadline;
-  final DateTime? expiredAt;
-  final String? paymentCode;
-  final int? price;
+  final List<SubscriptionDesc> desc;
+  final int price;
 
   Subscription({
     required this.id,
+    required this.type,
     required this.title,
-    required this.premiumBenefits,
-    this.paymentCode,
-    this.paymentDeadline,
-    this.expiredAt,
-    this.price,
+    required this.desc,
+    required this.price,
   });
 }

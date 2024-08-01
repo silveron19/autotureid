@@ -7,7 +7,8 @@ import 'package:autotureid/app/presentation/pages/register/login_screen.dart';
 import 'package:autotureid/app/presentation/pages/register/signup_screen.dart';
 import 'package:autotureid/app/presentation/pages/scaffold_with_navbar.dart';
 import 'package:autotureid/app/presentation/pages/splash_screen.dart';
-import 'package:autotureid/app/presentation/pages/subscription/subscription_detail_page.dart';
+import 'package:autotureid/app/presentation/pages/subscription/change_payment_method_page.dart';
+import 'package:autotureid/app/presentation/pages/subscription/payment_page.dart';
 import 'package:autotureid/app/presentation/pages/subscription/subscription_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -30,6 +31,25 @@ final router = GoRouter(
     GoRoute(
       path: '/signup',
       builder: (context, state) => const SignupScreen(),
+    ),
+    GoRoute(
+      path: '/subscription',
+      parentNavigatorKey: _rootNavigatorKey,
+      builder: (context, state) => const SubscriptionPage(),
+      routes: [
+        GoRoute(
+          path: 'payment',
+          builder: (context, state) => PaymentPage(
+            subscription: state.extra as Subscription,
+          ),
+          routes: [
+            GoRoute(
+              path: 'payment-method',
+              builder: (context, state) => const ChangePaymentMethodPage(),
+            ),
+          ],
+        ),
+      ],
     ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
@@ -59,18 +79,24 @@ final router = GoRouter(
               path: '/home',
               builder: (context, state) => const HomePage(),
               routes: [
-                GoRoute(
-                  path: 'subscription',
-                  builder: (context, state) => const SubscriptionPage(),
-                  routes: [
-                    GoRoute(
-                      path: 'detail',
-                      builder: (context, state) => SubscriptionDetailPage(
-                        subscription: state.extra as Subscription,
-                      ),
-                    ),
-                  ],
-                ),
+                // GoRoute(
+                //   path: 'subscription',
+                //   builder: (context, state) => const SubscriptionPage(),
+                //   routes: [
+                //     GoRoute(
+                //       path: 'payment',
+                //       builder: (context, state) => PaymentPage(
+                //         subscription: state.extra as Subscription,
+                //       ),
+                //       routes: [
+                //         GoRoute(
+                //           path: 'payment-method',
+                //           builder: (context, state) => const ChangePaymentMethodPage(),
+                //         ),
+                //       ],
+                //     ),
+                //   ],
+                // ),
                 GoRoute(
                   path: 'detail/:id',
                   builder: (context, state) => ProductDetailPage(
