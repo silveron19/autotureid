@@ -92,7 +92,7 @@ class _PaymentPageState extends State<PaymentPage> {
                       style: kTitle4TextStyle,
                     ),
                     Text(
-                      ParsePrice.parsePriceToRupiah(widget.subscription.price),
+                      ParsePrice.parsePriceToRupiah(notifier.getPaymentState.value!.amount),
                       style: kTitle4TextStyle,
                     ),
                   ],
