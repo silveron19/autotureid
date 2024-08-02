@@ -1,4 +1,5 @@
 import 'package:autotureid/app/presentation/pages/home/all_products_page.dart';
+import 'package:autotureid/app/presentation/provider/auth_notifier.dart';
 import 'package:autotureid/app/presentation/provider/product_notifier.dart';
 import 'package:autotureid/app/presentation/provider/search_notifier.dart';
 import 'package:autotureid/app/presentation/provider/subscription_notifier.dart';
@@ -24,6 +25,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   void initState() {
+    Future.microtask(() => Provider.of<AuthNotifier>(context, listen: false).getUser());
     Future.microtask(() => Provider.of<ProductNotifier>(context, listen: false).getHomeProducts());
     Future.microtask(() => Provider.of<SubscriptionNotifier>(context, listen: false).getUserPlan());
     super.initState();

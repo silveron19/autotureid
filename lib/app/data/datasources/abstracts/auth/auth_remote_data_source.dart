@@ -7,5 +7,7 @@ abstract class AuthRemoteDataSource {
   Future<UserDataModel> updateProfile(UpdateProfileParameter parameter);
   Future<void> logout();
 
+  Future<UserDataModel> getProfile();
+
   Future<void> resetPassword(ResetPasswordParameter parameter);
 }

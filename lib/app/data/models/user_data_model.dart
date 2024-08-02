@@ -20,7 +20,7 @@ class UserDataModel {
       id: json['id'],
       username: json['username'],
       email: json['email'],
-      phoneNumber: json['phone_number'],
+      phoneNumber: json['phone_number'] != null ? (json['phone_number'] as String).substring(1) : null,
       profilePicture: json['profile_picture'],
     );
   }
@@ -40,7 +40,16 @@ class UserDataModel {
       'id': id,
       'username': username,
       'email': email,
-      'phone_number': phoneNumber,
+      'phone_number': phoneNumber != null ? '0$phoneNumber' : null,
+      'profile_picture': profilePicture,
+    };
+  }
+
+  Map<String, dynamic> toJsonWithoutEmail() {
+    return {
+      'id': id,
+      'username': username,
+      'phone_number': phoneNumber != null ? '0$phoneNumber' : null,
       'profile_picture': profilePicture,
     };
   }

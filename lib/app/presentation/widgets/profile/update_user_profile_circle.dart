@@ -108,25 +108,34 @@ class _UpdateUserProfileCircleState extends State<UpdateUserProfileCircle> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => showOptions(context),
-      child: Container(
-        height: 82,
-        width: 82,
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.onSurface,
-          shape: BoxShape.circle,
-          image: widget.imageUrl != null
-              ? DecorationImage(
-                  image: NetworkImage(widget.imageUrl!),
-                  fit: BoxFit.cover,
-                )
-              : widget.imageNotifier.value != null
+      child: Column(
+        children: [
+          Container(
+            height: 82,
+            width: 82,
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.onSurface,
+              shape: BoxShape.circle,
+              image: widget.imageUrl != null
                   ? DecorationImage(
-                      image: FileImage(widget.imageNotifier.value!),
+                      image: NetworkImage(widget.imageUrl!),
                       fit: BoxFit.cover,
                     )
-                  : null,
-        ),
-        child: getChild(context),
+                  : widget.imageNotifier.value != null
+                      ? DecorationImage(
+                          image: FileImage(widget.imageNotifier.value!),
+                          fit: BoxFit.cover,
+                        )
+                      : null,
+            ),
+            child: getChild(context),
+          ),
+          const SizedBox(height: 8),
+          const Padding(
+            padding: EdgeInsets.only(left: 8),
+            child: Text('Ganti foto'),
+          ),
+        ],
       ),
     );
   }

@@ -19,6 +19,7 @@ class TextInputColumn extends StatelessWidget {
     this.arterisk = false,
     this.prefixWidget,
     this.onChanged,
+    this.phoneNumber = false,
   });
 
   final String text;
@@ -35,6 +36,7 @@ class TextInputColumn extends StatelessWidget {
   final bool arterisk;
   final Widget? prefixWidget;
   final void Function(String value)? onChanged;
+  final bool phoneNumber;
 
   @override
   Widget build(BuildContext context) {
@@ -80,6 +82,7 @@ class TextInputColumn extends StatelessWidget {
             validatorText: validatorText,
             prefixWidget: prefixWidget,
             onChanged: onChanged,
+            phoneNumber: phoneNumber,
           ),
         ],
       ),

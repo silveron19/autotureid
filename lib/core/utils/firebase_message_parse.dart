@@ -41,6 +41,10 @@ class FirebaseMessageParse {
         return 'Tidak bisa mengubah email';
       case 'requires-recent-login':
         return 'Silahkan login kembali';
+      case 'invalid-credential':
+      return 'Kata sandi salah';
+      case 'too-many-requests':
+        return 'Terlalu banyak percobaan. Coba lagi nanti';
       default:
         return 'Tidak dapat terhubung ke server';
     }

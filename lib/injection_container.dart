@@ -54,7 +54,7 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<AuthLocalDataSource>(
     () => AuthLocalDataSourceImpl(
-      storage: sl(),
+      firebaseAuth: sl(),
     ),
   );
   sl.registerLazySingleton<ProductRemoteDataSource>(

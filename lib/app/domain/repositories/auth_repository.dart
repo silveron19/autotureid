@@ -29,7 +29,9 @@ abstract class AuthRepository {
 
   Future<Either<Failure, void>> logout();
 
-  Future<void> cacheToLocal(UserData userData);
-  UserData? getFromLocal();
-  Future<void> removeFromLocal();
+  Future<Either<Failure, UserData>> getProfile();
+  
+  // Future<void> cacheToLocal(UserData userData);
+  String? getFromLocal();
+  // Future<void> removeFromLocal();
 }

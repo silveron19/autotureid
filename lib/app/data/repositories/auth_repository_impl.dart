@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:autotureid/app/data/datasources/abstracts/auth/auth_local_data_source.dart';
 import 'package:autotureid/app/data/datasources/abstracts/auth/auth_remote_data_source.dart';
-import 'package:autotureid/app/data/models/user_data_model.dart';
 import 'package:autotureid/app/domain/entities/user_data.dart';
 import 'package:autotureid/app/domain/repositories/auth_repository.dart';
 import 'package:autotureid/core/custom_exception.dart';
@@ -20,19 +19,14 @@ class AuthRepositoryImpl implements AuthRepository {
     required this.localDataSource,
   });
 
-  @override
-  Future<void> cacheToLocal(UserData userData) async {
-    await localDataSource.cacheToLocal(UserDataModel.fromEntity(userData));
-  }
+  // @override
+  // Future<void> cacheToLocal(UserData userData) async {
+  //   await localDataSource.cacheToLocal(UserDataModel.fromEntity(userData));
+  // }
 
   @override
-  UserData? getFromLocal() {
-    final user = localDataSource.getFromLocal();
-    if (user != null) {
-      return user.toEntity();
-    } else {
-      return null;
-    }
+  String? getFromLocal() {
+    return localDataSource.getFromLocal();
   }
 
   @override
@@ -44,7 +38,7 @@ class AuthRepositoryImpl implements AuthRepository {
       final user = await remoteDataSource.login(
         LoginParameter(email: email, password: password),
       );
-      await localDataSource.cacheToLocal(user);
+      // await localDataSource.cacheToLocal(user);
       return Right(user.toEntity());
     } on SocketException {
       return Left(ConnectionFailure());
@@ -61,16 +55,16 @@ class AuthRepositoryImpl implements AuthRepository {
     }
   }
 
-  @override
-  Future<void> removeFromLocal() async {
-    await localDataSource.removeFromLocal();
-  }
+  // @override
+  // Future<void> removeFromLocal() async {
+  //   await localDataSource.removeFromLocal();
+  // }
 
   @override
   Future<Either<Failure, void>> logout() async {
     try {
       await remoteDataSource.logout();
-      await localDataSource.removeFromLocal();
+      // await localDataSource.removeFromLocal();
       return const Right(null);
     } on SocketException {
       return Left(ConnectionFailure());
@@ -101,7 +95,7 @@ class AuthRepositoryImpl implements AuthRepository {
           username: username,
         ),
       );
-      await localDataSource.cacheToLocal(user);
+      // await localDataSource.cacheToLocal(user);
       return Right(user.toEntity());
     } on SocketException {
       return Left(ConnectionFailure());
@@ -138,7 +132,7 @@ class AuthRepositoryImpl implements AuthRepository {
           deleteProfilePicture: deleteProfilePicture,
         ),
       );
-      await localDataSource.cacheToLocal(user);
+      // await localDataSource.cacheToLocal(user);
       return Right(user.toEntity());
     } on SocketException {
       return Left(ConnectionFailure());
@@ -162,6 +156,27 @@ class AuthRepositoryImpl implements AuthRepository {
         ResetPasswordParameter(email: email),
       );
       return const Right(null);
+    } on SocketException {
+      return Left(ConnectionFailure());
+    } on HandshakeException {
+      return Left(ConnectionFailure());
+    } on ClientException {
+      return Left(ConnectionFailure());
+    } on CustomException catch (e) {
+      return Left(
+        BadRequestFailure(
+          message: e.message,
+        ),
+      );
+    }
+  }
+  
+  @override
+  Future<Either<Failure, UserData>> getProfile() async {
+    try {
+      final user = await remoteDataSource.getProfile();
+      // await localDataSource.cacheToLocal(user);
+      return Right(user.toEntity());
     } on SocketException {
       return Left(ConnectionFailure());
     } on HandshakeException {

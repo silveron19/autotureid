@@ -19,6 +19,7 @@ class PrimaryTextField extends StatefulWidget {
   final void Function(String value)? onChanged;
   final void Function(bool value)? onFocusChanged;
   final FocusNode? focusNode;
+  final bool phoneNumber;
 
   const PrimaryTextField({
     super.key,
@@ -38,6 +39,7 @@ class PrimaryTextField extends StatefulWidget {
     this.onChanged,
     this.onFocusChanged,
     this.focusNode,
+    this.phoneNumber = false,
   });
 
   @override
@@ -102,13 +104,21 @@ class _PrimaryTextFieldState extends State<PrimaryTextField> {
                   ? TextInputType.visiblePassword
                   : TextInputType.text,
       // deny minus sign for number input
-      inputFormatters: widget.number
+      inputFormatters: widget.phoneNumber
           ? [
+              FilteringTextInputFormatter.allow(RegExp(r'[1-9]\d*')),
+              LengthLimitingTextInputFormatter(11),
               FilteringTextInputFormatter.deny('-'),
               FilteringTextInputFormatter.deny(','),
               FilteringTextInputFormatter.deny(' '),
             ]
-          : null,
+          : widget.number
+              ? [
+                  FilteringTextInputFormatter.deny('-'),
+                  FilteringTextInputFormatter.deny(','),
+                  FilteringTextInputFormatter.deny(' '),
+                ]
+              : null,
       textInputAction: widget.isLastInput ? TextInputAction.done : TextInputAction.next,
       style: const TextStyle(
         fontSize: 16,
@@ -156,8 +166,7 @@ class _PrimaryTextFieldState extends State<PrimaryTextField> {
           borderSide: BorderSide.none,
         ),
         prefixIcon: widget.prefixWidget,
-        suffix: _suffixIcon,
-        suffixIcon: widget.suffixIcon,
+        suffixIcon: _suffixIcon,
       ),
     );
   }

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:autotureid/app/data/datasources/abstracts/auth/auth_remote_data_source.dart';
 import 'package:autotureid/app/data/models/user_data_model.dart';
 import 'package:autotureid/app/data/models/user_plan_model.dart';
@@ -35,7 +37,10 @@ class AuthRemoteDataSourceFirebase implements AuthRemoteDataSource {
     // get user data from firestore
     final userDoc = await firestore.collection('users').doc(userCredential.user!.uid).get();
 
-    return UserDataModel.fromJson(userDoc.data()!);
+    Map<String, dynamic> data = userDoc.data()!;
+    data['email'] = firebaseAuth.currentUser!.email;
+    
+    return UserDataModel.fromJson(data);
   }
 
   @override
@@ -69,7 +74,7 @@ class AuthRemoteDataSourceFirebase implements AuthRemoteDataSource {
       );
 
       // create user data model
-      transaction.set(userDoc, userData.toJson());
+      transaction.set(userDoc, userData.toJsonWithoutEmail());
 
       final userPlanDocRef = firestore.collection('user_plans').doc();
 
@@ -109,9 +114,9 @@ class AuthRemoteDataSourceFirebase implements AuthRemoteDataSource {
             password: parameter.password,
           ),
         );
-        await firebaseAuth.currentUser!.updateEmail(parameter.email);
-        // await firebaseAuth.currentUser!.verifyBeforeUpdateEmail(parameter.email!);
+        await firebaseAuth.currentUser!.verifyBeforeUpdateEmail(parameter.email);
       } on FirebaseAuthException catch (e) {
+        log(e.message!);
         throw CustomException(FirebaseMessageParse.parseUpdateEmailError(e.code));
       }
     }
@@ -122,7 +127,10 @@ class AuthRemoteDataSourceFirebase implements AuthRemoteDataSource {
     // user data model
     final doc = await userDoc.get();
 
-    final oldUserData = UserDataModel.fromJson(doc.data()!);
+    Map<String, dynamic> data = doc.data()!;
+    data['email'] = firebaseAuth.currentUser!.email;
+
+    final oldUserData = UserDataModel.fromJson(data);
 
     // update profile picture
     String? newProfilePictureUrl;
@@ -154,14 +162,14 @@ class AuthRemoteDataSourceFirebase implements AuthRemoteDataSource {
     final newUserData = UserDataModel(
       id: oldUserData.id,
       username: parameter.username.isNotEmpty ? parameter.username : oldUserData.username,
-      email: parameter.email.isNotEmpty ? parameter.email : oldUserData.email,
+      email: firebaseAuth.currentUser!.email!,
       phoneNumber:
           parameter.phoneNumber.isNotEmpty ? parameter.phoneNumber : oldUserData.phoneNumber,
       profilePicture: newProfilePictureUrl ?? oldUserData.profilePicture,
     );
 
     // update user data model
-    await userDoc.update(newUserData.toJson());
+    await userDoc.update(newUserData.toJsonWithoutEmail());
 
     return newUserData;
   }
@@ -175,5 +183,20 @@ class AuthRemoteDataSourceFirebase implements AuthRemoteDataSource {
     } on FirebaseAuthException catch (e) {
       throw CustomException(FirebaseMessageParse.parseForgotPasswordError(e.code));
     }
+  }
+
+  @override
+  Future<UserDataModel> getProfile() async {
+    try {
+    await firebaseAuth.currentUser!.reload();
+    } on FirebaseAuthException catch (_){
+      throw(CustomException('Email/password telah diganti. Silakan log in kembali'));
+    }
+    final userDoc = await firestore.collection('users').doc(firebaseAuth.currentUser!.uid).get();
+
+    Map<String, dynamic> data = userDoc.data()!;
+    data['email'] = firebaseAuth.currentUser!.email;
+
+    return UserDataModel.fromJson(data);
   }
 }

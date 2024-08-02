@@ -1,5 +1,6 @@
 import 'package:autotureid/app/data/datasources/abstracts/product/product_remote_data_source.dart';
 import 'package:autotureid/app/data/models/product_model.dart';
+import 'package:autotureid/core/custom_exception.dart';
 import 'package:autotureid/core/parameter/product_parameter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,39 +16,47 @@ class ProductRemoteDataSourceFirebase extends ProductRemoteDataSource {
 
   @override
   Future<List<ProductModel>> getLastSeenProducts() async {
-    // get user last seen products from firestore
-    final user = auth.currentUser!;
-    final doc = firestore.collection('users').doc(user.uid);
-    final snapshot = await doc.get();
-    if (snapshot.exists) {
-      final data = snapshot.data() as Map<String, dynamic>;
-      if (data['last_seen_products'] == null) {
-        return [];
+    try {
+      // get user last seen products from firestore
+      final user = auth.currentUser!;
+      final doc = firestore.collection('users').doc(user.uid);
+      final snapshot = await doc.get();
+      if (snapshot.exists) {
+        final data = snapshot.data() as Map<String, dynamic>;
+        if (data['last_seen_products'] == null) {
+          return [];
+        }
+        final List<String> lastSeenProducts = List<String>.from(data['last_seen_products']);
+        if (lastSeenProducts.isEmpty) {
+          return [];
+        }
+        final snapshots =
+            await firestore.collection('products').where('id', whereIn: lastSeenProducts).get();
+        return snapshots.docs.map((e) => ProductModel.fromJson(e.data())).toList();
       }
-      final List<String> lastSeenProducts = List<String>.from(data['last_seen_products']);
-      if (lastSeenProducts.isEmpty) {
-        return [];
-      }
-      final snapshots =
-          await firestore.collection('products').where('id', whereIn: lastSeenProducts).get();
-      return snapshots.docs.map((e) => ProductModel.fromJson(e.data())).toList();
+      return [];
+    } on FirebaseException catch (e) {
+      throw CustomException(e.code);
     }
-    return [];
   }
 
   @override
   Future<List<ProductModel>> getNewProducts() async {
-    QuerySnapshot snapshot = await firestore
-        .collection('products')
-        .where('created_at',
-            isGreaterThanOrEqualTo:
-                Timestamp.fromDate(DateTime.now().subtract(const Duration(days: 7))))
-        .orderBy('created_at', descending: true)
-        .limit(10)
-        .get();
-    return snapshot.docs
-        .map((e) => ProductModel.fromJson(e.data() as Map<String, dynamic>))
-        .toList();
+    try {
+      QuerySnapshot snapshot = await firestore
+          .collection('products')
+          .where('created_at',
+              isGreaterThanOrEqualTo:
+                  Timestamp.fromDate(DateTime.now().subtract(const Duration(days: 7))))
+          .orderBy('created_at', descending: true)
+          .limit(10)
+          .get();
+      return snapshot.docs
+          .map((e) => ProductModel.fromJson(e.data() as Map<String, dynamic>))
+          .toList();
+    } on FirebaseException catch (e) {
+      throw CustomException(e.code);
+    }
   }
 
   @override

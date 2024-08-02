@@ -3,6 +3,7 @@ import 'package:autotureid/app/data/models/payment_method_model.dart';
 import 'package:autotureid/app/data/models/payment_model.dart';
 import 'package:autotureid/app/data/models/subscription_model.dart';
 import 'package:autotureid/app/data/models/user_plan_model.dart';
+import 'package:autotureid/core/custom_exception.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -116,6 +117,9 @@ class SubscriptionRemoteDataSourceFirebase implements SubscriptionRemoteDataSour
 
   @override
   Future<UserPlanModel> getUserPlan() async {
+    if (firebaseAuth.currentUser == null) {
+      throw CustomException('User not found');
+    }
     final userId = firebaseAuth.currentUser!.uid;
 
     final userPlanSnapshot =

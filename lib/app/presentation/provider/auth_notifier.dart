@@ -2,22 +2,55 @@ import 'dart:io';
 
 import 'package:autotureid/app/domain/entities/user_data.dart';
 import 'package:autotureid/app/domain/repositories/auth_repository.dart';
+import 'package:autotureid/core/router.dart';
 import 'package:autotureid/core/utils/notifier_state.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class AuthNotifier extends ChangeNotifier {
   final AuthRepository authRepository;
 
   AuthNotifier({required this.authRepository});
 
-  late UserData user;
+  UserData? user;
 
-  final NotifierState<UserData?> getUserFromLocalState = NotifierState();
+  final NotifierState<void> getUserState = NotifierState();
+  final NotifierState<void> getUserFromLocalState = NotifierState();
   final NotifierState<UserData?> loginState = NotifierState();
   final NotifierState<UserData?> signupState = NotifierState();
   final NotifierState<UserData?> updateProfileState = NotifierState();
   final NotifierState<void> logoutState = NotifierState();
   final NotifierState<void> resetPasswordState = NotifierState();
+
+  void getUser() async {
+    getUserState.setLoading();
+    notifyListeners();
+
+    final result = await authRepository.getProfile();
+
+    result.fold(
+      (failure) {
+        getUserState.setError(error: failure.message);
+        if (failure.message == 'Email/password telah diganti. Silakan log in kembali') {
+          user = null;
+          loginState.reset();
+          getUserState.reset();
+          signupState.reset();
+          router.go('/login');
+          Fluttertoast.showToast(
+            msg: failure.message,
+            toastLength: Toast.LENGTH_SHORT,
+          );
+        }
+      },
+      (userData) {
+        getUserState.setSuccess();
+        user = userData;
+      },
+    );
+
+    notifyListeners();
+  }
 
   void getUserFromLocal() {
     getUserFromLocalState.setLoading();
@@ -25,7 +58,6 @@ class AuthNotifier extends ChangeNotifier {
     final userFromLocal = authRepository.getFromLocal();
     if (userFromLocal != null) {
       getUserFromLocalState.setSuccess();
-      user = userFromLocal;
     } else {
       getUserFromLocalState.setError();
     }
@@ -96,6 +128,8 @@ class AuthNotifier extends ChangeNotifier {
       (failure) => logoutState.setError(error: failure.message),
       (_) => logoutState.setSuccess(),
     );
+    loginState.reset();
+    signupState.reset();
     notifyListeners();
   }
 

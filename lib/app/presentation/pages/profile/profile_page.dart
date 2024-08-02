@@ -1,4 +1,6 @@
 import 'package:autotureid/app/presentation/provider/auth_notifier.dart';
+import 'package:autotureid/app/presentation/widgets/global/circular_loading_indicator.dart';
+import 'package:autotureid/app/presentation/widgets/global/erro_retry_fetch_button.dart';
 import 'package:autotureid/app/presentation/widgets/profile/profile_header_information.dart';
 import 'package:autotureid/app/presentation/widgets/profile/profile_option_tile.dart';
 import 'package:autotureid/const/resource.dart';
@@ -17,6 +19,10 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
+    final auth = Provider.of<AuthNotifier>(context, listen: false);
+    if (auth.user == null) {
+      Future.microtask(() => auth.getUser());
+    }
     super.initState();
   }
 
@@ -28,6 +34,16 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       body: Consumer<AuthNotifier>(
         builder: (context, auth, child) {
+          final state = auth.getUserState;
+          if (state.isLoading() || state.isInitial()) {
+            return const CircularLoadingIndicator();
+          } else if (state.isError()) {
+            return ErrorRetryFetchButton(
+              failure: state.failure!,
+              onRetry: auth.getUser,
+            );
+          }
+
           final user = auth.user;
           return SafeArea(
             child: Padding(
@@ -36,7 +52,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
-                    child: ProfileHeaderInformation(user: user),
+                    child: ProfileHeaderInformation(user: user!),
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

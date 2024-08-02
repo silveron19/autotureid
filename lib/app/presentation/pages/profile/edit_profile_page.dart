@@ -32,7 +32,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   void initState() {
     Provider.of<AuthNotifier>(context, listen: false).updateProfileState.reset();
-    user = Provider.of<AuthNotifier>(context, listen: false).user;
+    user = Provider.of<AuthNotifier>(context, listen: false).user!;
     imageNotifier = ValueNotifier<File?>(null);
     usernameController = TextEditingController(text: user.username);
     phoneController = TextEditingController(text: user.phoneNumber);
@@ -55,7 +55,24 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   void onEmailChanged(String value) {
-    setState(() {});
+    setState(() {
+      Provider.of<AuthNotifier>(context, listen: false).updateProfileState.reset();
+    });
+  }
+
+  void onComplete() {
+    if (formKey.currentState!.validate()) {
+      Provider.of<AuthNotifier>(context, listen: false).updateProfile(
+        usernameController.text,
+        emailController.text,
+        passwordController.text,
+        phoneController.text,
+        imageNotifier.value,
+        deleteProfileNotifier.value &&
+            user.profilePicture !=
+                null, // delete profile picture if user already have profile picture
+      );
+    }
   }
 
   @override
@@ -81,8 +98,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     toastLength: Toast.LENGTH_SHORT,
                   );
                 } else if (state.isSuccess()) {
+                  final text = passwordController.text.isNotEmpty
+                      ? 'Profil berhasil diubah, silakan buka link di email yang baru'
+                      : 'Profil berhasil diubah';
                   Fluttertoast.showToast(
-                    msg: 'Profil berhasil diubah',
+                    msg: text,
                     toastLength: Toast.LENGTH_SHORT,
                   );
                   Future.microtask(() => context.go('/profile'));
@@ -92,20 +112,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   dense: true,
                   borderRadius: 12,
                   primaryColor: true,
-                  onPressed: () {
-                    if (formKey.currentState!.validate()) {
-                      value.updateProfile(
-                        usernameController.text,
-                        emailController.text,
-                        passwordController.text,
-                        phoneController.text,
-                        imageNotifier.value,
-                        deleteProfileNotifier.value &&
-                            user.profilePicture !=
-                                null, // delete profile picture if user already have profile picture
-                      );
-                    }
-                  },
+                  onPressed: onComplete,
                 );
               },
             ),
@@ -146,11 +153,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 8),
-                const Padding(
-                  padding: EdgeInsets.only(left: 8),
-                  child: Text('Ganti foto'),
-                ),
                 const SizedBox(height: kDefaultPadding),
                 TextInputColumn(
                   text: 'Nama',
@@ -165,6 +167,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   controller: phoneController,
                   hintText: 'Nomor HP',
                   arterisk: true,
+                  number: true,
+                  phoneNumber: true,
                   prefixWidget: Container(
                     width: 10,
                     height: 10,
@@ -202,6 +206,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         isPassword: true,
                         validator: (value) => value.isEmpty,
                         validatorText: 'Password harus diisi',
+                        onComplete: onComplete,
                       )
                     : const SizedBox(),
               ],
