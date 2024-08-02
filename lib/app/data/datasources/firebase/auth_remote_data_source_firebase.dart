@@ -100,7 +100,7 @@ class AuthRemoteDataSourceFirebase implements AuthRemoteDataSource {
   @override
   Future<UserDataModel> updateProfile(UpdateProfileParameter parameter) async {
     // check if user update email
-    if (parameter.email.isNotEmpty) {
+    if (parameter.email != firebaseAuth.currentUser!.email) {
       // update email in firebase auth
       try {
         await firebaseAuth.currentUser!.reauthenticateWithCredential(

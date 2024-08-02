@@ -42,12 +42,14 @@ final router = GoRouter(
       routes: [
         GoRoute(
           path: 'payment',
+          parentNavigatorKey: _rootNavigatorKey,
           builder: (context, state) => PaymentPage(
             subscription: state.extra as Subscription,
           ),
           routes: [
             GoRoute(
               path: 'payment-method',
+              parentNavigatorKey: _rootNavigatorKey,
               builder: (context, state) => const ChangePaymentMethodPage(),
             ),
           ],

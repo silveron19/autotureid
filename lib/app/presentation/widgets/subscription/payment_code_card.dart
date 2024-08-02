@@ -39,11 +39,11 @@ class PaymentCodeCard extends StatelessWidget {
               children: [
                 Text(
                   paymentMethod.accountNumber,
-                  style: kTitle4TextStyle,
+                  style: kTitle4TextStyle.copyWith(color: Colors.black),
                 ),
-                const Text(
+                Text(
                   'Kode Pembayaran',
-                  style: kSubtitle5TextStyle,
+                  style: kSubtitle5TextStyle.copyWith(color: Colors.black),
                 ),
               ],
             ),
