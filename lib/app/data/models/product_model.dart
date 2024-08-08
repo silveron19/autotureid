@@ -30,7 +30,7 @@ class ProductModel {
       desc: json['desc'],
       price: json['price'],
       picture: json['picture'],
-      model: json['model'],
+      model: json['models']['glb'],
       createdAt: json['created_at'],
     );
   }

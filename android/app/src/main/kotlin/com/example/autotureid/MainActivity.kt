@@ -1,4 +1,4 @@
-package com.example.autotureid
+package com.autoture.app
 
 import io.flutter.embedding.android.FlutterActivity
 

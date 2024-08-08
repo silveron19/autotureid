@@ -1,6 +1,8 @@
 import 'package:autotureid/app/domain/entities/subscription.dart';
+import 'package:autotureid/app/presentation/pages/arture_page.dart';
 import 'package:autotureid/app/presentation/pages/home/all_products_page.dart';
 import 'package:autotureid/app/presentation/pages/home/home_page.dart';
+import 'package:autotureid/app/presentation/pages/home/product_detail_ar_page.dart';
 import 'package:autotureid/app/presentation/pages/home/product_detail_page.dart';
 import 'package:autotureid/app/presentation/pages/profile/edit_profile_page.dart';
 import 'package:autotureid/app/presentation/pages/profile/manage_account_page.dart';
@@ -90,7 +92,15 @@ final router = GoRouter(
                 ),
                 GoRoute(
                   path: 'detail/:id',
+                  parentNavigatorKey: _rootNavigatorKey,
                   builder: (context, state) => ProductDetailPage(
+                    id: state.pathParameters['id']!,
+                  ),
+                ),
+                GoRoute(
+                  path: 'ar/:id',
+                  parentNavigatorKey: _rootNavigatorKey,
+                  builder: (context, state) => ProductDetailArPage(
                     id: state.pathParameters['id']!,
                   ),
                 ),
@@ -102,7 +112,7 @@ final router = GoRouter(
           routes: [
             GoRoute(
               path: '/arture',
-              builder: (context, state) => const HomePage(),
+              builder: (context, state) => const ArturePage(),
             ),
           ],
         ),

@@ -26,9 +26,8 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace "com.example.autotureid"
+    namespace "com.autoture.app"
     compileSdk flutter.compileSdkVersion
-    ndkVersion flutter.ndkVersion
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -45,10 +44,10 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.example.autotureid"
+        applicationId "com.autoture.app"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion 23
+        minSdkVersion 28
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -67,4 +66,8 @@ flutter {
     source '../..'
 }
 
-dependencies {}
+dependencies {
+    // implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
+    implementation(name: 'UnityARCore', ext: 'aar')
+    implementation project(':unityLibrary')
+}

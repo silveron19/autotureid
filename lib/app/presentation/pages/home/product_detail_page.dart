@@ -1,11 +1,9 @@
 import 'package:autotureid/app/presentation/provider/product_notifier.dart';
 import 'package:autotureid/app/presentation/widgets/global/primary_action_button.dart';
 import 'package:autotureid/app/presentation/widgets/product/product_detail_shimmer.dart';
-import 'package:autotureid/const/resource.dart';
 import 'package:autotureid/core/constants.dart';
 import 'package:autotureid/core/utils/parse_price.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_3d_controller/flutter_3d_controller.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -22,18 +20,19 @@ class ProductDetailPage extends StatefulWidget {
 }
 
 class _ProductDetailPageState extends State<ProductDetailPage> {
-  late Flutter3DController controller;
+  // Flutter3DController controller = Flutter3DController();
 
   @override
   void initState() {
     super.initState();
-    controller = Flutter3DController();
+    // controller = Flutter3DController();
     Future.microtask(
         () => Provider.of<ProductNotifier>(context, listen: false).getProductDetail(widget.id));
   }
 
   @override
   void dispose() {
+    // controller = null;
     super.dispose();
   }
 
@@ -98,33 +97,33 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Center(
-                      //   child: Image.network(
-                      //     product.picture,
-                      //     width: 263,
-                      //     height: 252,
-                      //   ),
-                      // ),
-                      //The 3D viewer widget
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            height: 252,
-                            child: Flutter3DViewer(
-                              progressBarColor: color.primary,
-                              controller: controller,
-                              src: product.model,
-                            ),
-                          ),
-                          Image.asset(
-                            R.ASSETS_ICONS_MODEL_ARROW_PNG,
-                            width: 22,
-                            height: 22,
-                            color: color.onSurface,
-                          ),
-                        ],
+                      Center(
+                        child: Image.network(
+                          product.picture,
+                          width: 263,
+                          height: 252,
+                        ),
                       ),
+                      //The 3D viewer widget
+                      // Column(
+                      //   crossAxisAlignment: CrossAxisAlignment.center,
+                      //   children: [
+                      //     SizedBox(
+                      //       height: 252,
+                      //       child: Flutter3DViewer(
+                      //         progressBarColor: color.primary,
+                      //         controller: controller,
+                      //         src: product.model,
+                      //       ),
+                      //     ),
+                      //     Image.asset(
+                      //       R.ASSETS_ICONS_MODEL_ARROW_PNG,
+                      //       width: 22,
+                      //       height: 22,
+                      //       color: color.onSurface,
+                      //     ),
+                      //   ],
+                      // ),
                       const SizedBox(height: 16),
                       Align(
                         alignment: Alignment.centerRight,
@@ -132,7 +131,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                           text: 'Lihat dengan ARTure',
                           radiusOnlyRight: false,
                           fontSize: 16,
-                          onTap: () {},
+                          onTap: () {
+                            context.push('/home/ar/${product.id}');
+                          },
                         ),
                       ),
                       Padding(

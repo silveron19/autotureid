@@ -8,12 +8,13 @@ import 'package:autotureid/core/theme.dart';
 import 'package:autotureid/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'injection_container.dart' as di;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  await Permission.camera.request();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
